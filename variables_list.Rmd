@@ -1,0 +1,20 @@
+---
+title: "variables_list"
+author: "Jackson Nahpi"
+date: "October 25, 2017"
+output: html_document
+---
+#packages
+```{R}
+library(foreign)
+library(haven)
+library(dplyr)
+```
+#data sets
+```{R}
+freshman_fall<-read.dta("nlsfw1p.dta/nlsfw1p.dta")
+freshman_spring<-read.dta("nlsfw2p.dta/nlsfw2p.dta")
+sophomore_spring<-read.dta("nlsfw3p.dta/nlsfw3p.dta")
+junior<-read.dta("nlsfw4p.dta/nlsfw4p.dta")
+senior<-read.dta("nlsfw5p.dta/nlsfw5p.dta")
+```
