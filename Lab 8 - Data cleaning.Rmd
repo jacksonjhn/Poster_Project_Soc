@@ -15,79 +15,73 @@ Using your own dataset (which may include more than one table) carry out the fol
 # Read in your data with the appropriate function
 data <- 
   
-data_subset <- data %>%
-  select(w2q1, w2q2m, w2q7ea)# replace with variable's you wish to add
+data_subset <- freshman_spring %>%
+  select(w2q1)
+colnames(data_subset)[colnames(data_subset)=="w2q1"] <- "eyy"
+
 ```
 
 ```{r}
-fresh_vars <- freshman_spring %>% 
-  select(w2q5ca, w2q5cb, w2q5cc, w2q5cd, w2q5ce, w2q5cf, w2q5ea, w2q5eb, w2q5ec, w2q5ed, w2q5ee, w2q5ef, w2q7ca, w2q7cb, w2q7cc, w2q7cd, w2q7ce, w2q7cf, w2q7ea, w2q7eb, w2q7ec, w2q7ed, w2q7ee, w2q7ef)
+freshman_dataset <- freshman_spring %>% 
+  select(caseid, w2q5ca, w2q5cb, w2q5cc, w2q5cd, w2q5ce, w2q5ea, w2q5eb, w2q5ec, w2q5ed, w2q5ee, w2q7ca, w2q7cb, w2q7cc, w2q7cd, w2q7ce, w2q7ea, w2q7eb, w2q7ec, w2q7ed, w2q7ee, w2q23d, w2q23e, w2q23j, w2q23k, w2q23l, w2q23o, w2q23u, w2q23v, w2q23w, w2q23y, w2q25, w2q26a, w2q26b, w2q53a, w2q53b, w2q53c, w2q53d, w2q53e)
 
-sopfres_vars <- sophomore_spring %>%
-  select(w3q9a2, w3q9b2, w3q9c2, w3q9d2, w3q9e2, w3q9f2, w3q9a5, w3q9b5, w3q9c5, w3q9d5, w3q9e5, w3q9f5)
-
-fresh_vars2 <- freshman_spring %>%
-  select(w2q21g, w2q21j, w2q21k, w2q21m, w2q21s, w2q22g, w2q22j, w2q22k, w2q22m, w2q22s)
-
-fresh <- cbind2(fresh_vars, sopfres_vars)
-freshman_year <- cbind2(fresh, fresh_vars2)
-
-soph_vars <- sophomore_spring %>% 
-  select(w3q13a2, w3q13b2, w3q13c2, w3q13d2, w3q13e2, w3q13f2, w3q13a5, w3q13b5, w3q13c5, w3q13d5, w3q13e5, w3q13f5, w3q15a2, w3q15b2, w3q15c2, w3q15d2, w3q15e2, w3q15f2, w3q15a5, w3q15b5, w3q15c5, w3q15d5, w3q15e5, w3q15f5, w3q17a2, w3q17b2, w3q17c2, w3q17d2, w3q17e2, w3q17f2)
-
-junsop_vars <- junior %>%
-  select(w4q17a, w4q17b, w4q17c, w4q17d, w4q17e, w4q17f)
-
-soph_vars2 <- sophomore_spring %>%
-  select(w3q40f, w3q40i, w3q40j, w3q40m, w3q40ml, w3q41f, w3q41i, w3q41j, w3q41m, w3q41ml)
-
-soph <- cbind2(soph_vars, junsop_vars)
-sophomore_year <- cbind2(soph, soph_vars2)
-
-junior_vars <- junior %>%
-  select(w4q16aa0, w4q16ba, w4q16ca, w4q16da, w4q16ea, w4q16fa, w4q16ac, w4q16bc, w4q16cc0, w4q16dc, w4q16ec, w4q16fc, w4q15aa0, w4q15ba, w4q15ca, w4q15da, w4q15ea, w4q15fa, w4q15ac, w4q15bc, w4q15cc0, w4q15dc, w4q15ec, w4q15fc, w4q14aa0, w4q14ba, w4q14ca, w4q14da, w4q14ea, w4q14fa)
-
-senjun_vars <- senior %>%
-  select(w5q16ac, w5q16bc, w5q16cc, w5q16dc, w5q16ec, w5q16fc)
-
-junior_vars2 <- junior %>%
-  select(w4q29k, w4q29n, w4q29o, w4q29_r, w4q29_rs, w4q30k, w4q30n, w4q30o, w4q30_s, w4q30_ss)
-
-junio <- cbind2(junior_vars, senjun_vars)
-junior_year <- cbind2(junio, junior_vars2)
+names(freshman_dataset) <- c("caseid",
+          "fdept_1", 
+          "fdept_2", 
+          "fdept_3", 
+          "fdept_4", 
+          "fdept_5", 
+          "fgrd_1", 
+          "fgrd_2", 
+          "fgrd_3", 
+          "fgrd_4", 
+          "fgrd_5", 
+          "wdept_1", 
+          "wdept_2", 
+          "wdept_3", 
+          "wdept_4", 
+          "wdept_5", 
+          "wgrd_1", 
+          "wgrd_2", 
+          "wgrd_3", 
+          "wgrd_4", 
+          "wgrd_5", 
+          "hlp_frm_profs", 
+          "tlk_with_profs", 
+          "stdy_wth_stdnts", 
+          "stdy_byself", 
+          "mk_stdy_grp", 
+          "hlp_frm_forcm", 
+          "colcarplcmnt", 
+          "vst_acdadvis", 
+          "vst_finaidcnslr", 
+          "vst_psychcnslr", 
+          "tuition",
+          "pymnts_prnts", 
+          "pymnts_fam", 
+          "fem_frnds", 
+          "aframr_frnds", 
+          "hisp_frnds", 
+          "asn_frnds", 
+          "wht_friends"
+         )
 ```
-1. To get a feel for its structure, look at the class, dimensions, column names, structure, and basic summary statistics of your data.
-```{r}
-summary(freshman_year)
-summary(sophomore_year)
-summary(junior_year)
-```
-
 2. Preview the first and last 15 rows of your data. Is you dataset tidy? If not, what principles of tidy data does it seem to be violating?
 ```{r}
-head(freshman_year, n = 15)
-head(sophomore_year, n = 15)
-head(junior_year, n = 15)
-tail(freshman_year, n = 15)
-tail(sophomore_year, n = 15)
-tail(junior_year, n = 15)
+head(freshman_dataset, n = 15)
+tail(freshman_dataset, n = 15)
 ```
-
+After I renamed the variables the data seems relatively tidy, except for winter where all of the variables are NA
 
 3. Create a histogram for at least two variables you plan to focus on for your study. Describe what these plots show you about these variables. 
 ```{r}
-fresh_comm0 <- freshman_year %>%
-  select(w2q21g)
-fresh_frie0 <- freshman_year %>%
-  select(w2q21k)
-fresh_comm <- as.numeric(fresh_comm0)
-fresh_frie <- as.numeric(fresh_frie0)
-
-hist(fresh_comm$fresh_frie)
+ggplot(data = freshman_dataset)
 ```
 
 4. Create at least one bivariate plot showing the relationship between two variables of interest. What does/do the(se) plot(s) tell you about the association between these two variables?
+```{r}
 
+```
 
 
 5. Load the `tidyr` package. Do all of your columns correspond to variables? Do any columns represent multiple variables? If your answer is yes to either question, carry out the appropriate `tidyr` function (`gather()` or `spread()` respectively) to tidy your data. 
@@ -102,11 +96,10 @@ None need to be changed
 7. What is the class of each of the variables in your analysis? Are these classes appropriate for the type of measurement they purport to capture? Explain your reasoning. 
 
 ```{r}
-sapply(freshman_year, class)
-sapply(sophomore_year, class)
-sapply(junior_year, class)
+sapply(freshman_dataset, class)
 ```
-All values are numeric except for the following (w3q13a2, w3q13a2, w5q16ac, w5q16bc, w5q16cc, w5q16dc, w5q16ec, and w5q16fc) however they should be numerics since they are measured in the same manner as other questions. All the other variables are fitting as being numerics. However, they are almost all ordinal variables with the exceptions of the social capital measurements which measure time spent doing various social activities.
+All of my variables are classified as integers. They are appropriate for the dataset since all but three of the variables are categorical variables that have assigned values to what they mean.
+
 
 8. Do any of your variables need to be coerced into a different data type? If so, carry out the appropriate coercion methods below. (This includes transformation of any date objects using the `lubridate` package)
 
