@@ -22,48 +22,40 @@ colnames(data_subset)[colnames(data_subset)=="w2q1"] <- "eyy"
 ```
 
 ```{r}
-freshman_dataset <- freshman_spring %>% 
-  select(caseid, w2q5ca, w2q5cb, w2q5cc, w2q5cd, w2q5ce, w2q5ea, w2q5eb, w2q5ec, w2q5ed, w2q5ee, w2q7ca, w2q7cb, w2q7cc, w2q7cd, w2q7ce, w2q7ea, w2q7eb, w2q7ec, w2q7ed, w2q7ee, w2q23d, w2q23e, w2q23j, w2q23k, w2q23l, w2q23o, w2q23u, w2q23v, w2q23w, w2q23y, w2q25, w2q26a, w2q26b, w2q53a, w2q53b, w2q53c, w2q53d, w2q53e)
+freshman_dataset <- freshman_fall %>% 
+  select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
 
 names(freshman_dataset) <- c("caseid",
-          "fdept_1", 
-          "fdept_2", 
-          "fdept_3", 
-          "fdept_4", 
-          "fdept_5", 
-          "fgrd_1", 
-          "fgrd_2", 
-          "fgrd_3", 
-          "fgrd_4", 
-          "fgrd_5", 
-          "wdept_1", 
-          "wdept_2", 
-          "wdept_3", 
-          "wdept_4", 
-          "wdept_5", 
-          "wgrd_1", 
-          "wgrd_2", 
-          "wgrd_3", 
-          "wgrd_4", 
-          "wgrd_5", 
-          "hlp_frm_profs", 
-          "tlk_with_profs", 
-          "stdy_wth_stdnts", 
-          "stdy_byself", 
-          "mk_stdy_grp", 
-          "hlp_frm_forcm", 
-          "colcarplcmnt", 
-          "vst_acdadvis", 
-          "vst_finaidcnslr", 
-          "vst_psychcnslr", 
-          "tuition",
-          "pymnts_prnts", 
-          "pymnts_fam", 
-          "fem_frnds", 
-          "aframr_frnds", 
-          "hisp_frnds", 
-          "asn_frnds", 
-          "wht_friends"
+          "college", 
+          "prntsat6", 
+          "prntsat13", 
+          "prntsatlyr", 
+          "checkhw6", 
+          "rwrdfrgrds6", 
+          "pnshfrgrds6", 
+          "pnshdeviance6", 
+          "artmusm6", 
+          "scimusm6", 
+          "educprogram6",
+          "checkhw13", 
+          "rwrdfrgrds13", 
+          "pnshfrgrds13", 
+          "pnshdeviance13", 
+          "artmusm13", 
+          "scimusm13", 
+          "educprogram13",
+          "checkhwlyr", 
+          "rwrdfrgrdslyr", 
+          "pnshfrgrds1lyr", 
+          "pnshdeviancelyr", 
+          "musmlyr", 
+          "educprogramlyr", 
+          "currntcolaspir", 
+          "probfincol1yr",
+          "probfincol2yr",
+          "probfincol",
+          "probextraeduc",
+          "probfingraddeg"
          )
 ```
 2. Preview the first and last 15 rows of your data. Is you dataset tidy? If not, what principles of tidy data does it seem to be violating?
@@ -71,11 +63,11 @@ names(freshman_dataset) <- c("caseid",
 head(freshman_dataset, n = 15)
 tail(freshman_dataset, n = 15)
 ```
-After I renamed the variables the data seems relatively tidy, except for winter where all of the variables are NA
+After I renamed the variables the data seems relatively tidy with no NAs present as far as I can see
 
 3. Create a histogram for at least two variables you plan to focus on for your study. Describe what these plots show you about these variables. 
 ```{r}
-ggplot(data = freshman_dataset)
+
 ```
 
 4. Create at least one bivariate plot showing the relationship between two variables of interest. What does/do the(se) plot(s) tell you about the association between these two variables?
