@@ -23,10 +23,11 @@ colnames(data_subset)[colnames(data_subset)=="w2q1"] <- "eyy"
 
 ```{r}
 freshman_dataset <- freshman_fall %>% 
-  select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
+  select(caseid, college, sex, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
 
 names(freshman_dataset) <- c("caseid",
-          "college", 
+          "college",
+          "sex",
           "prntsat6", 
           "prntsat13", 
           "prntsatlyr", 
@@ -46,7 +47,7 @@ names(freshman_dataset) <- c("caseid",
           "educprogram13",
           "checkhwlyr", 
           "rwrdfrgrdslyr", 
-          "pnshfrgrds1lyr", 
+          "pnshfrgrdslyr", 
           "pnshdeviancelyr", 
           "musmlyr", 
           "educprogramlyr", 
@@ -67,14 +68,14 @@ After I renamed the variables the data seems relatively tidy with no NAs present
 
 3. Create a histogram for at least two variables you plan to focus on for your study. Describe what these plots show you about these variables. 
 ```{r}
-
+hist("checkhwlyr")
 ```
 
 4. Create at least one bivariate plot showing the relationship between two variables of interest. What does/do the(se) plot(s) tell you about the association between these two variables?
 ```{r}
 attach(freshman_dataset)
-plot(pymnts_prnts, pymnts_fam, main = "Bivariate plot"
-     xlab = "Tuition payments by parents", ylab = "Tuition payments by family",
+plot(checkhwlyr, probfincol1yr, main = "Bivariate plot",
+     xlab = "check_hw_lyr", ylab = "prob_fin_col1yr",
      pch = 19)
 ```
 
@@ -84,7 +85,10 @@ No, none of my data represents multiple variables
 
 
 6. Do any columns need to be separated into two or more? Do any columns need to be combined into one? If so, carry out the appropriate the appropriate `tidyr` function (`separate()` or `unite()` respectively) to tidy your data.  
-
+```{r}
+unite(freshman_dataset, musm6)
+unite(freshman_dataset, musm13)
+```
 
 **At this stage each row in your data should represent one observation, each column should be a variable, and each table should be observational unit.** 
 
@@ -93,7 +97,7 @@ No, none of my data represents multiple variables
 ```{r}
 sapply(freshman_dataset, class)
 ```
-All of my variables are classified as integers. They are appropriate for the dataset since all but three of the variables are categorical variables that have assigned values to what they mean.
+All of my variables are classified as integer with the exception to college, which is classified as numeric
 
 
 8. Do any of your variables need to be coerced into a different data type? If so, carry out the appropriate coercion methods below. (This includes transformation of any date objects using the `lubridate` package)
