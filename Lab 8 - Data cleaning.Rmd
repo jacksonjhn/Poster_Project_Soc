@@ -58,6 +58,8 @@ names(freshman_dataset) <- c("caseid",
           "probextraeduc",
           "probfingraddeg"
          )
+
+freshman_dataset <- na.omit(freshman_dataset)
 ```
 2. Preview the first and last 15 rows of your data. Is you dataset tidy? If not, what principles of tidy data does it seem to be violating?
 ```{r}
@@ -68,15 +70,21 @@ After I renamed the variables the data seems relatively tidy with no NAs present
 
 3. Create a histogram for at least two variables you plan to focus on for your study. Describe what these plots show you about these variables. 
 ```{r}
-hist("checkhwlyr")
+check_HW_senior <- freshman_dataset$checkhwlyr
+
+hist(check_HW_senior,
+     right = FALSE
+     )
 ```
+The histogram shows us the distribution of how much students got their homework checked in their senior year by their parents
 
 4. Create at least one bivariate plot showing the relationship between two variables of interest. What does/do the(se) plot(s) tell you about the association between these two variables?
 ```{r}
 attach(freshman_dataset)
 plot(checkhwlyr, probfincol1yr, main = "Bivariate plot",
      xlab = "check_hw_lyr", ylab = "prob_fin_col1yr",
-     pch = 19)
+     pch = 19
+     )
 ```
 
 
@@ -86,6 +94,13 @@ No, none of my data represents multiple variables
 
 6. Do any columns need to be separated into two or more? Do any columns need to be combined into one? If so, carry out the appropriate the appropriate `tidyr` function (`separate()` or `unite()` respectively) to tidy your data.  
 ```{r}
+freshman_dataset <- subset(freshman_dataset,
+                           artmusm6 < 6
+                           )
+freshman_dataset <- subset(freshman_dataset,
+                           artmusm6 < 6
+                           )
+
 unite(freshman_dataset, musm6)
 unite(freshman_dataset, musm13)
 ```
@@ -109,7 +124,7 @@ All of my variables are classified as integer with the exception to college, whi
 
 
 10. Do you have any missing values in your dataset? How many and how are they coded? **Be sure to look out for specific codebook values for missing values (i.e. `-1` for `NA`) as well as empty strings or other software-specific values for `NA`.** Don't worry about removing NAs yet - we'll tackle this question later once discern whether they're random or systematically distributed. 
-There are some currently in the w prelabeled variables since there was no data taken from the winter.
+There are no missing values
 
 
 11. Are there any special values in your dataset? If so, what are they and how do you think they got there? *The presence of special values is less likely if you haven't performed any data manipulation yet so you should remember to return to this step each time you carry out a mathematical transformation of any values in your dataset.*
@@ -117,11 +132,13 @@ There are some currently in the w prelabeled variables since there was no data t
 
 
 12. Create a boxplot of your data (you can create an individual boxplot for each variable if there are too many variables in your dataset to meaningfully visualize them all in one plot). Are there any outliers? If so, what are they and to which variable do they correspond? Do any of these outliers seem like obvious errors? If so, why? 
-
+```{r}
+boxplot()
+```
 
 
 
 13. For any outliers and/or obvious errors, what do you think is the best way to handle them (i.e. remove them entirely, run analyses including and excluding them and compare the results, manually change them to an appropriate measure of center, or something else?). 
-
+The best option would be to remove them if there are only a few of them since they don't really contribute to the data since they are outliers. 
 
 
