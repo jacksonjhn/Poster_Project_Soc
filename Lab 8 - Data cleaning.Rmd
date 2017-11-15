@@ -60,6 +60,50 @@ names(freshman_dataset) <- c("caseid",
          )
 
 freshman_dataset <- na.omit(freshman_dataset)
+freshman_dataset <- transform(freshman_dataset,
+                              caseid = as.numeric(caseid),
+                              prntsat6 = as.numeric(prntsat6),
+                              prntsat13 = as.numeric(prntsat13),
+                              prntsatlyr = as.numeric(prntsatlyr)
+                              )
+
+freshman_dataset <- transform(freshman_dataset,
+                              checkhw6 = as.numeric(checkhw6),
+                              rwrdfrgrds6 = as.numeric(rwrdfrgrds6),
+                              pnshfrgrds6 = as.numeric(pnshfrgrds6),
+                              pnshdeviance6 = as.numeric(pnshdeviance6),
+                              artmusm6 = as.numeric(artmusm6), 
+                              scimusm6 = as.numeric(scimusm6),
+                              educprogram6 = as.numeric(educprogram6)
+                              )
+
+freshman_dataset <- transform(freshman_dataset,
+                              checkhw13 = as.numeric(checkhw13),
+                              rwrdfrgrds13 = as.numeric(rwrdfrgrds13),
+                              pnshfrgrds13 = as.numeric(pnshfrgrds13),
+                              pnshdeviance13 = as.numeric(pnshdeviance13),
+                              artmusm13 = as.numeric(artmusm13),
+                              scimusm13 = as.numeric(scimusm13),
+                              educprogram13 = as.numeric(educprogram13)
+                              )
+                              
+freshman_dataset <- transform(freshman_dataset,
+                              checkhwlyr = as.numeric(checkhwlyr),
+                              rwrdfrgrdslyr = as.numeric(rwrdfrgrdslyr),
+                              pnshfrgdrslyr = as.numeric(pnshfrgrdslyr),
+                              pnshdeviancelyr = as.numeric(pnshdeviancelyr),
+                              musmlyr = as.numeric(musmlyr),
+                              educprogramlyr = as.numeric(educprogramlyr)
+                              )
+
+freshman_dataset <- transform(freshman_dataset,
+                              currntcolaspir = as.numeric(currntcolaspir),
+                              probfincol1yr = as.numeric(probfincol1yr),
+                              probfincol2yr = as.numeric(probfincol2yr),
+                              probfincol = as.numeric(probfincol),
+                              probextraeduc = as.numeric(probextraeduc),
+                              probfingraddeg = as.numeric(probfingraddeg)
+                              )
 ```
 2. Preview the first and last 15 rows of your data. Is you dataset tidy? If not, what principles of tidy data does it seem to be violating?
 ```{r}
@@ -97,9 +141,8 @@ No, none of my data represents multiple variables
 freshman_dataset <- subset(freshman_dataset,
                            artmusm6 < 6
                            )
-freshman_dataset <- subset(freshman_dataset,
-                           artmusm6 < 6
-                           )
+freshman_dataset <- freshman_dataset[freshman_dataset$artmusm6 != 6, ]
+
 
 unite(freshman_dataset, musm6)
 unite(freshman_dataset, musm13)
