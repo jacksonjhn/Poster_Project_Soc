@@ -23,11 +23,19 @@ colnames(data_subset)[colnames(data_subset)=="w2q1"] <- "eyy"
 
 ```{r}
 freshman_dataset <- freshman_fall %>% 
-  select(caseid, college, sex, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
+  select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
 
-names(freshman_dataset) <- c("caseid",
+sex_vector <- ifelse(freshman_fall$sex == "M", 0, 1)
+
+sex_vector <- data.frame(sex_vector)
+
+freshman_dataset <- bind_cols(sex_vector, freshman_dataset)
+
+freshman_dataset <- na.omit(freshman_dataset)
+
+names(freshman_dataset) <- c("sex",
+          "caseid",
           "college",
-          "sex",
           "prntsat6", 
           "prntsat13", 
           "prntsatlyr", 
@@ -59,7 +67,8 @@ names(freshman_dataset) <- c("caseid",
           "probfingraddeg"
          )
 
-freshman_dataset <- na.omit(freshman_dataset)
+
+
 freshman_dataset <- transform(freshman_dataset,
                               caseid = as.numeric(caseid),
                               prntsat6 = as.numeric(prntsat6),
@@ -90,7 +99,7 @@ freshman_dataset <- transform(freshman_dataset,
 freshman_dataset <- transform(freshman_dataset,
                               checkhwlyr = as.numeric(checkhwlyr),
                               rwrdfrgrdslyr = as.numeric(rwrdfrgrdslyr),
-                              pnshfrgdrslyr = as.numeric(pnshfrgrdslyr),
+                              pnshfrgrdslyr = as.numeric(pnshfrgrdslyr),
                               pnshdeviancelyr = as.numeric(pnshdeviancelyr),
                               musmlyr = as.numeric(musmlyr),
                               educprogramlyr = as.numeric(educprogramlyr)
@@ -104,6 +113,7 @@ freshman_dataset <- transform(freshman_dataset,
                               probextraeduc = as.numeric(probextraeduc),
                               probfingraddeg = as.numeric(probfingraddeg)
                               )
+
 ```
 2. Preview the first and last 15 rows of your data. Is you dataset tidy? If not, what principles of tidy data does it seem to be violating?
 ```{r}
