@@ -48,6 +48,8 @@ select(freshman_dataset,
 
 4. Are there any mutations you wish to carry out on your data (i.e. new variables you wish to create based upon the values of already existing variables)? If so, describe what they are and what you will name them.
 
+I want to create two new variables that just represent museum visits at ages 6 and 13 since I have two separate variables for both of those years labeled as art museum visits and science museum visits. I want to consolidate each of these two pairs of variables into musm6 and musm13 then divide both of them by 2 and round to nearest whole number so I can keep the original measurement system already implemented into the variables.
+
 5. You can use mutate() to add multiple variables at once. To create more than one variable, place a comma between each variable that you define inside `mutate()`.
   
   a. Carry out any and all of the mutations you wish to perform on your dataset and print the results to the console.
