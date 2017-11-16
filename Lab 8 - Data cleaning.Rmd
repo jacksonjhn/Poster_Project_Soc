@@ -67,8 +67,6 @@ names(freshman_dataset) <- c("sex",
           "probfingraddeg"
          )
 
-
-
 freshman_dataset <- transform(freshman_dataset,
                               caseid = as.numeric(caseid),
                               prntsat6 = as.numeric(prntsat6),
@@ -198,22 +196,24 @@ I did this above when I generated the dataset
 
 9. Are there any strings you need to manipulate for your analysis? If so, use the appropriate function from the [`stringr`](https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html) package. 
 
+I removed all unnecessary values in the datasets corresponding to no responses.
 
 
 10. Do you have any missing values in your dataset? How many and how are they coded? **Be sure to look out for specific codebook values for missing values (i.e. `-1` for `NA`) as well as empty strings or other software-specific values for `NA`.** Don't worry about removing NAs yet - we'll tackle this question later once discern whether they're random or systematically distributed. 
 
-I preemptively removed all of the NAs
+I preemptively removed all of the NAs.
 
 
 11. Are there any special values in your dataset? If so, what are they and how do you think they got there? *The presence of special values is less likely if you haven't performed any data manipulation yet so you should remember to return to this step each time you carry out a mathematical transformation of any values in your dataset.*
 
-There are none
+There are none.
 
 
 12. Create a boxplot of your data (you can create an individual boxplot for each variable if there are too many variables in your dataset to meaningfully visualize them all in one plot). Are there any outliers? If so, what are they and to which variable do they correspond? Do any of these outliers seem like obvious errors? If so, why? 
 ```{r}
-boxplot(freshman_dataset$prntsat6, horizontal = TRUE)
+boxplot(freshman_dataset$probfingraddeg, horizontal = TRUE)
 ```
+There are a few outliers who specifically say they are highly unlikely to finish a graduate degree. I probably will not use very many boxplots for my research later though
 
 This may not be applicable to my data since my data is entirely categorical resulting in a very short range of numbers it can be. Until I remove the unnecessary values I don't have much use in creating a boxplot.
 
