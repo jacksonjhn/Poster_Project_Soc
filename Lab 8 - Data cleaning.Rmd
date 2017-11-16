@@ -114,6 +114,34 @@ freshman_dataset <- transform(freshman_dataset,
                               probfingraddeg = as.numeric(probfingraddeg)
                               )
 
+freshman_dataset <- filter(freshman_dataset, 
+                           checkhw6 < 6 & 
+                             rwrdfrgrds6 < 6 &
+                             pnshfrgrds6 < 6 &
+                             pnshdeviance6 < 6 &
+                             artmusm6 < 6 &
+                             scimusm6 < 6 &
+                             educprogram6 < 6 &
+                             checkhw13 < 6 &
+                             rwrdfrgrds13 < 6 &
+                             pnshfrgrds13 < 6 &
+                             pnshdeviance13 < 6 & 
+                             artmusm13 < 6 &  
+                             scimusm13 < 6 &  
+                             educprogram13 < 6 &
+                             checkhwlyr < 6 & 
+                             rwrdfrgrdslyr < 6 & 
+                             pnshfrgrdslyr < 6 &  
+                             pnshdeviancelyr < 6 & 
+                             musmlyr < 6 & 
+                             educprogramlyr < 6 & 
+                             probfincol1yr < 97 &
+                             probfincol2yr < 97 & 
+                             probfincol < 97 & 
+                             probextraeduc < 97 & 
+                             probfingraddeg < 97
+                             )
+
 ```
 2. Preview the first and last 15 rows of your data. Is you dataset tidy? If not, what principles of tidy data does it seem to be violating?
 ```{r}
