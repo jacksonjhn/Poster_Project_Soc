@@ -178,14 +178,12 @@ plot(checkhwlyr, probfincol1yr, main = "Bivariate plot",
 
 5. Load the `tidyr` package. Do all of your columns correspond to variables? Do any columns represent multiple variables? If your answer is yes to either question, carry out the appropriate `tidyr` function (`gather()` or `spread()` respectively) to tidy your data. 
 
-No, none of my data represents multiple variables
+No, none of my data represents multiple variables, with the exception of museum
 
 
 6. Do any columns need to be separated into two or more? Do any columns need to be combined into one? If so, carry out the appropriate the appropriate `tidyr` function (`separate()` or `unite()` respectively) to tidy your data.  
-```{r}
-unite(freshman_dataset, musm6)
-unite(freshman_dataset, musm13)
-```
+
+I had to merge the artmusm and scimusm columns into one to represent total museums but I used the mutate function to do so.
 
 **At this stage each row in your data should represent one observation, each column should be a variable, and each table should be observational unit.** 
 
