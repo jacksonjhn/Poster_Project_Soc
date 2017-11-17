@@ -140,6 +140,14 @@ freshman_dataset <- filter(freshman_dataset,
                              probfingraddeg < 97
                              )
 
+freshman_dataset <- mutate(freshman_dataset,
+                           musm6 = round((freshman_dataset$artmusm6 + 
+                                            freshman_dataset$scimusm6)/2, 0))
+  
+freshman_dataset <- mutate(freshman_dataset, 
+                           musm13 = round((freshman_dataset$artmusm13 + 
+                                             freshman_dataset$scimusm13)/2, 0))
+
 ```
 2. Preview the first and last 15 rows of your data. Is you dataset tidy? If not, what principles of tidy data does it seem to be violating?
 ```{r}
