@@ -53,6 +53,16 @@ I want to create two new variables that just represent museum visits at ages 6 a
 5. You can use mutate() to add multiple variables at once. To create more than one variable, place a comma between each variable that you define inside `mutate()`.
   
   a. Carry out any and all of the mutations you wish to perform on your dataset and print the results to the console.
+```{r}
+freshman_dataset <- mutate(freshman_dataset,
+                           musm6 = round((freshman_dataset$artmusm6 + 
+                                            freshman_dataset$scimusm6)/2, 0))
+  
+freshman_dataset <- mutate(freshman_dataset, 
+                           musm13 = round((freshman_dataset$artmusm13 + 
+                                             freshman_dataset$scimusm13)/2, 0))
+```
+  I used both of these mutations to create singular variables that represent museum visits by combining art and science museum visits.
   
 6. `R` comes with a set of logical operators that you can use inside `filter()`:
 - `x < y`, `TRUE` if `x` is less than `y`
@@ -64,13 +74,48 @@ I want to create two new variables that just represent museum visits at ages 6 a
 - `x %in% c(a, b, c)`, `TRUE` if `x` is in the vector `c(a, b, c)`
 
   a. What are some potential subsets of your data that seem interesting and worth investigation to you? 
+  
+  An interesting subset would be each of the age snapshots from the participants we have that show how much their parent does "blank" to them and each of these we can see if they interact with their optimism of their college potential.
+  
   b. Use at least two of the logical operators presented above to print these subsets of your data.
-    
-    
+```{r}
+filter(freshman_dataset <- filter(freshman_dataset, 
+                             checkhw6 < 6 & 
+                             rwrdfrgrds6 < 6 &
+                             pnshfrgrds6 < 6 &
+                             pnshdeviance6 < 6 &
+                             artmusm6 < 6 &
+                             scimusm6 < 6 &
+                             educprogram6 < 6 &
+                             checkhw13 < 6 &
+                             rwrdfrgrds13 < 6 &
+                             pnshfrgrds13 < 6 &
+                             pnshdeviance13 < 6 & 
+                             artmusm13 < 6 &  
+                             scimusm13 < 6 &  
+                             educprogram13 < 6 &
+                             checkhwlyr < 6 & 
+                             rwrdfrgrdslyr < 6 & 
+                             pnshfrgrdslyr < 6 &  
+                             pnshdeviancelyr < 6 & 
+                             musmlyr < 6 & 
+                             educprogramlyr < 6 & 
+                             probfincol1yr < 97 &
+                             probfincol2yr < 97 & 
+                             probfincol < 97 & 
+                             probextraeduc < 97 & 
+                             probfingraddeg < 97
+                             )
+)
+```
+    I used this line of code in the previous lab to remove all the observation that contained values that were seen as missing or didn't know.
      
 7. `R` also comes with a set of boolean operators that you can use to combine multiple logical tests into a single test. These include `&` (and), `|` (or), and `!` (not). Instead of using the `&` operator, you can also pass several logical tests to `filter()`, separated by commas. `is.na()` will also come in handy.   
 
   a. Use `R`'s logical and boolean operators to select just the rows in your data that meet a specific boolean condition. 
+```{r}
+
+```
   b. Print out all of the observations in your data in which none of variables are `NA`.
 
 
