@@ -79,6 +79,17 @@ freshman_dataset <- mutate(freshman_dataset,
   
   b. Use at least two of the logical operators presented above to print these subsets of your data.
 ```{r}
+freshman_dataset <- freshman_fall %>% 
+  select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
+
+sex_vector <- ifelse(freshman_fall$sex == "M", 0, 1)
+```
+    I selected all of the variables I want to use, I chose the sex of the respondents separate from the other variables since I needed to recode sex from a character to a numeric.
+     
+7. `R` also comes with a set of boolean operators that you can use to combine multiple logical tests into a single test. These include `&` (and), `|` (or), and `!` (not). Instead of using the `&` operator, you can also pass several logical tests to `filter()`, separated by commas. `is.na()` will also come in handy.   
+
+  a. Use `R`'s logical and boolean operators to select just the rows in your data that meet a specific boolean condition. 
+```{r}
 filter(freshman_dataset <- filter(freshman_dataset, 
                              checkhw6 < 6 & 
                              rwrdfrgrds6 < 6 &
@@ -108,14 +119,8 @@ filter(freshman_dataset <- filter(freshman_dataset,
                              )
 )
 ```
-    I used this line of code in the previous lab to remove all the observation that contained values that were seen as missing or didn't know.
-     
-7. `R` also comes with a set of boolean operators that you can use to combine multiple logical tests into a single test. These include `&` (and), `|` (or), and `!` (not). Instead of using the `&` operator, you can also pass several logical tests to `filter()`, separated by commas. `is.na()` will also come in handy.   
-
-  a. Use `R`'s logical and boolean operators to select just the rows in your data that meet a specific boolean condition. 
-```{r}
-
-```
+I used this line of code in the previous lab to remove all the observation that contained values that were seen as missing or didn't know. 
+ 
   b. Print out all of the observations in your data in which none of variables are `NA`.
 
 
