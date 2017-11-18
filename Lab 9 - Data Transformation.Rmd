@@ -122,14 +122,20 @@ filter(freshman_dataset <- filter(freshman_dataset,
 I used this line of code in the previous lab to remove all the observation that contained values that were seen as missing or didn't know. 
  
   b. Print out all of the observations in your data in which none of variables are `NA`.
-
-
+```{r}
+freshman_dataset <- na.omit(freshman_dataset)
+print(freshman_dataset)
+```
+In lab 8 I already used code to remove all NA's from the dataset using the command above.
 
 8. `arrange()` can be used to rearrange rows according to any type of data. If you pass `arrange()` a character variable, for example, `R` will rearrange the rows in alphabetical order according to values of the variable. If you pass a factor variable, `R` will rearrange the rows according to the order of the levels in your factor (running `levels()` on the variable reveals this order).
 
 By default, `arrange()` arranges the rows from smallest to largest. Rows with the smallest value of the variable will appear at the top of the data set. You can reverse this behavior with the `desc()` function. `arrange()` will reorder the rows from largest to smallest values of a variable if you wrap the variable name in `desc()` before passing it to `arrange()`.
 
   a. Which variable(s) in your dataset would be logical to arrange your data on? Explain your reasoning.
+  
+  I don't think this question is relevant to my data since it doesn't need to be ordered by row and is not a longitudinal dataset.
+  
   b. Arrange your data by this/these variables and print the results. 
   
 
@@ -146,9 +152,29 @@ By default, `arrange()` arranges the rows from smallest to largest. Rows with th
 - `diff(range(x))` - total range of vector `x`.
 
   a. Pick at least one variable of interest to your project analysis.
+  
+  The variables I feel that would be interesting to look at would be the standard deviation, variance, and mean of the variables involving what parents "blank" for their kids but across years of 6, 13, and their senior year.
+  
   b. Print out at least three summary statistics using `summarise()`. 
+```{r}
+summarise(freshman_dataset,
+          sd = sd(freshman_dataset$checkhw6),
+          var = var(freshman_dataset$checkhw6),
+          mean = mean(freshman_dataset$checkhw6)
+          )
 
+summarise(freshman_dataset,
+          sd = sd(freshman_dataset$checkhw13),
+          var = var(freshman_dataset$checkhw13),
+          mean = mean(freshman_dataset$checkhw13)
+          )
 
+summarise(freshman_dataset,
+          sd = sd(freshman_dataset$checkhwlyr),
+          var = var(freshman_dataset$checkhwlyr),
+          mean = mean(freshman_dataset$checkhwlyr)
+          )
+```
 
 10. `dplyr` provides several helpful aggregate functions of its own, in addition to the ones that are already defined in `R`. These include:
 - `first(x)` - The first element of vector `x`.
