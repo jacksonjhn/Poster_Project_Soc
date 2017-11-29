@@ -23,7 +23,7 @@ colnames(data_subset)[colnames(data_subset)=="w2q1"] <- "eyy"
 
 ```{r}
 freshman_dataset <- freshman_fall %>% 
-  select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
+  dplyr::select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
 
 sex_vector <- ifelse(freshman_fall$sex == "M", 0, 1)
 
