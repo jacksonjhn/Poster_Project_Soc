@@ -17,14 +17,14 @@ I don't have to match based on keys since my data each row represents a specific
 
 3. If you do not need to merge tables to create your final dataset, create a new dataset from your original dataset with a `grouped_by()` summary of your choice. You will use this separate dataset to complete the following exercises. 
 ```{r}
-freshman_dataset_v2 <- freshman_fall %>% 
-  dplyr::select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
+lab_dataset_v1 <- freshman_fall %>% 
+  dplyr::select(parnt6, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
 
-names(freshman_dataset_v2) <- c("caseid",
-          "college",
+lab_dataset_v2 <- freshman_fall %>% 
+  dplyr::select(parnt13, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
+
+names(lab_dataset_v1) <- c(
           "prntsat6", 
-          "prntsat13", 
-          "prntsatlyr", 
           "checkhw6", 
           "rwrdfrgrds6", 
           "pnshfrgrds6", 
@@ -32,20 +32,6 @@ names(freshman_dataset_v2) <- c("caseid",
           "artmusm6", 
           "scimusm6", 
           "educprogram6",
-          "checkhw13", 
-          "rwrdfrgrds13", 
-          "pnshfrgrds13", 
-          "pnshdeviance13", 
-          "artmusm13", 
-          "scimusm13", 
-          "educprogram13",
-          "checkhwlyr", 
-          "rwrdfrgrdslyr", 
-          "pnshfrgrdslyr", 
-          "pnshdeviancelyr", 
-          "musmlyr", 
-          "educprogramlyr", 
-          "currntcolaspir", 
           "probfincol1yr",
           "probfincol2yr",
           "probfincol",
@@ -53,44 +39,31 @@ names(freshman_dataset_v2) <- c("caseid",
           "probfingraddeg"
          )
 
-freshman_dataset_v2 <- transform(freshman_dataset_v2,
-                              caseid = as.numeric(caseid),
-                              prntsat6 = as.numeric(prntsat6),
-                              prntsat13 = as.numeric(prntsat13),
-                              prntsatlyr = as.numeric(prntsatlyr)
-                              )
+names(lab_dataset_v2) <- c(
+          "prntsat13", 
+          "checkhw13", 
+          "rwrdfrgrds13", 
+          "pnshfrgrds13", 
+          "pnshdeviance13", 
+          "artmusm13", 
+          "scimusm13", 
+          "educprogram13",
+          "probfincol1yr_2",
+          "probfincol2yr_2",
+          "probfincol_2",
+          "probextraeduc_2",
+          "probfingraddeg_2"
+         )
 
-freshman_dataset_v2 <- transform(freshman_dataset_v2,
+lab_dataset_v1 <- transform(lab_dataset_v1,
+                              prntsat6 = as.numeric(prntsat6), 
                               checkhw6 = as.numeric(checkhw6),
                               rwrdfrgrds6 = as.numeric(rwrdfrgrds6),
                               pnshfrgrds6 = as.numeric(pnshfrgrds6),
                               pnshdeviance6 = as.numeric(pnshdeviance6),
                               artmusm6 = as.numeric(artmusm6), 
                               scimusm6 = as.numeric(scimusm6),
-                              educprogram6 = as.numeric(educprogram6)
-                              )
-
-freshman_dataset_v2 <- transform(freshman_dataset_v2,
-                              checkhw13 = as.numeric(checkhw13),
-                              rwrdfrgrds13 = as.numeric(rwrdfrgrds13),
-                              pnshfrgrds13 = as.numeric(pnshfrgrds13),
-                              pnshdeviance13 = as.numeric(pnshdeviance13),
-                              artmusm13 = as.numeric(artmusm13),
-                              scimusm13 = as.numeric(scimusm13),
-                              educprogram13 = as.numeric(educprogram13)
-                              )
-                              
-freshman_dataset_v2 <- transform(freshman_dataset_v2,
-                              checkhwlyr = as.numeric(checkhwlyr),
-                              rwrdfrgrdslyr = as.numeric(rwrdfrgrdslyr),
-                              pnshfrgrdslyr = as.numeric(pnshfrgrdslyr),
-                              pnshdeviancelyr = as.numeric(pnshdeviancelyr),
-                              musmlyr = as.numeric(musmlyr),
-                              educprogramlyr = as.numeric(educprogramlyr)
-                              )
-
-freshman_dataset_v2 <- transform(freshman_dataset_v2,
-                              currntcolaspir = as.numeric(currntcolaspir),
+                              educprogram6 = as.numeric(educprogram6),
                               probfincol1yr = as.numeric(probfincol1yr),
                               probfincol2yr = as.numeric(probfincol2yr),
                               probfincol = as.numeric(probfincol),
@@ -98,20 +71,32 @@ freshman_dataset_v2 <- transform(freshman_dataset_v2,
                               probfingraddeg = as.numeric(probfingraddeg)
                               )
 
-sex_vector <- ifelse(freshman_fall$sex == "M", 0, 1)
-
-sex_vector <- data.frame(sex_vector)
+lab_dataset_v2 <- transform(lab_dataset_v2,
+                              prntsat13 = as.numeric(prntsat13),
+                              checkhw13 = as.numeric(checkhw13),
+                              rwrdfrgrds13 = as.numeric(rwrdfrgrds13),
+                              pnshfrgrds13 = as.numeric(pnshfrgrds13),
+                              pnshdeviance13 = as.numeric(pnshdeviance13),
+                              artmusm13 = as.numeric(artmusm13),
+                              scimusm13 = as.numeric(scimusm13),
+                              educprogram13 = as.numeric(educprogram13),
+                              probfincol1yr_2 = as.numeric(probfincol1yr_2),
+                              probfincol2yr_2 = as.numeric(probfincol2yr_2),
+                              probfincol_2 = as.numeric(probfincol_2),
+                              probextraeduc_2 = as.numeric(probextraeduc_2),
+                              probfingraddeg_2 = as.numeric(probfingraddeg_2)
+                              )
 ```
-I will be using this altered dataset for this labs purposes since it is unaltered in any tpye of manupulation.
+I will be using these two altered datasets for this lab just to give practice in using the function, by no means do either of these datasets really show anything statistically significant. They are merely for my own learning.
 
 If you are merging separate tables as part of your data manipulation process, are your keys of the same data type? If not, what are the differences? Figure out the appropriate coercion process(es) and carry out the steps below. 
-```{r}
 
-```
 4. Perform each version of the mutating joins (don't forget to specify the `by` argument) and print the results to the console. Describe what each join did to your datasets and what the resulting data table looks like. For those joining two separate datasets, did any of these joins result in your desired final dataset? Why or why not?
 ```{r}
-left_join()
-right_join()
+left_join(freshman_dataset_v2, sex_vector, by = )
+
+JUST USE BIG DATASET AND SLIT IT UP
+right_join(freshman_dataset_v2, sex_vector)
 ```
 5. Do the same thing with the filtering joins. What was the result? Give an example of a case in which a `semi_join()` or an `anti_join()` might be used with your primary dataset
 
