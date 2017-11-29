@@ -9,17 +9,104 @@ Using your own dataset (which may include more than one table) carry out the fol
 
 1. For your poster project, do you have multiple tables you'd like to join together to create your complete dataset? If so, describe what each table represents. 
 
-
+I want to combine the tables for the sex vector and the overall dataset of all the other variables I want to include in my analysis.
 
 2. What is/are your primary key(s)? If you have more than one table in your data, what is/are your foreign key(s)? Do your primary key(s) and foreign key(s) have the same name? If not, what does this mean for the way you need to specify potential data merges?
 
-
+I don't have to match based on keys since my data each row represents a specific individual and is already organized with all of their traits present.
 
 3. If you do not need to merge tables to create your final dataset, create a new dataset from your original dataset with a `grouped_by()` summary of your choice. You will use this separate dataset to complete the following exercises. 
+```{r}
+freshman_dataset_v2 <- freshman_fall %>% 
+  dplyr::select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
+
+names(freshman_dataset_v2) <- c("caseid",
+          "college",
+          "prntsat6", 
+          "prntsat13", 
+          "prntsatlyr", 
+          "checkhw6", 
+          "rwrdfrgrds6", 
+          "pnshfrgrds6", 
+          "pnshdeviance6", 
+          "artmusm6", 
+          "scimusm6", 
+          "educprogram6",
+          "checkhw13", 
+          "rwrdfrgrds13", 
+          "pnshfrgrds13", 
+          "pnshdeviance13", 
+          "artmusm13", 
+          "scimusm13", 
+          "educprogram13",
+          "checkhwlyr", 
+          "rwrdfrgrdslyr", 
+          "pnshfrgrdslyr", 
+          "pnshdeviancelyr", 
+          "musmlyr", 
+          "educprogramlyr", 
+          "currntcolaspir", 
+          "probfincol1yr",
+          "probfincol2yr",
+          "probfincol",
+          "probextraeduc",
+          "probfingraddeg"
+         )
+
+freshman_dataset_v2 <- transform(freshman_dataset_v2,
+                              caseid = as.numeric(caseid),
+                              prntsat6 = as.numeric(prntsat6),
+                              prntsat13 = as.numeric(prntsat13),
+                              prntsatlyr = as.numeric(prntsatlyr)
+                              )
+
+freshman_dataset_v2 <- transform(freshman_dataset_v2,
+                              checkhw6 = as.numeric(checkhw6),
+                              rwrdfrgrds6 = as.numeric(rwrdfrgrds6),
+                              pnshfrgrds6 = as.numeric(pnshfrgrds6),
+                              pnshdeviance6 = as.numeric(pnshdeviance6),
+                              artmusm6 = as.numeric(artmusm6), 
+                              scimusm6 = as.numeric(scimusm6),
+                              educprogram6 = as.numeric(educprogram6)
+                              )
+
+freshman_dataset_v2 <- transform(freshman_dataset_v2,
+                              checkhw13 = as.numeric(checkhw13),
+                              rwrdfrgrds13 = as.numeric(rwrdfrgrds13),
+                              pnshfrgrds13 = as.numeric(pnshfrgrds13),
+                              pnshdeviance13 = as.numeric(pnshdeviance13),
+                              artmusm13 = as.numeric(artmusm13),
+                              scimusm13 = as.numeric(scimusm13),
+                              educprogram13 = as.numeric(educprogram13)
+                              )
+                              
+freshman_dataset_v2 <- transform(freshman_dataset_v2,
+                              checkhwlyr = as.numeric(checkhwlyr),
+                              rwrdfrgrdslyr = as.numeric(rwrdfrgrdslyr),
+                              pnshfrgrdslyr = as.numeric(pnshfrgrdslyr),
+                              pnshdeviancelyr = as.numeric(pnshdeviancelyr),
+                              musmlyr = as.numeric(musmlyr),
+                              educprogramlyr = as.numeric(educprogramlyr)
+                              )
+
+freshman_dataset_v2 <- transform(freshman_dataset_v2,
+                              currntcolaspir = as.numeric(currntcolaspir),
+                              probfincol1yr = as.numeric(probfincol1yr),
+                              probfincol2yr = as.numeric(probfincol2yr),
+                              probfincol = as.numeric(probfincol),
+                              probextraeduc = as.numeric(probextraeduc),
+                              probfingraddeg = as.numeric(probfingraddeg)
+                              )
+
+sex_vector <- ifelse(freshman_fall$sex == "M", 0, 1)
+
+sex_vector <- data.frame(sex_vector)
+```
+I will be using this altered dataset for this labs purposes since it is unaltered in any tpye of manupulation.
 
 If you are merging separate tables as part of your data manipulation process, are your keys of the same data type? If not, what are the differences? Figure out the appropriate coercion process(es) and carry out the steps below. 
 ```{r}
-group_by(freshman_dataset)
+
 ```
 4. Perform each version of the mutating joins (don't forget to specify the `by` argument) and print the results to the console. Describe what each join did to your datasets and what the resulting data table looks like. For those joining two separate datasets, did any of these joins result in your desired final dataset? Why or why not?
 ```{r}
@@ -37,8 +124,9 @@ anti_join()
 
 
 7. If you have any reason to compare tables, apply `setequal()` below. What were the results? 
-
-
+```{r}
+setequal()
+```
 
 8. What is the purpose of binding data and why might you need to take extra precaution when carrying out this specific form of data merging? If your data requires any binding, carry out the steps below and describe what was accomplished by your merge.
 
