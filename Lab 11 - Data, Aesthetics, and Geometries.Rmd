@@ -27,7 +27,29 @@ ggplot(data = freshman_dataset,
        aes(x = freshman_dataset$probfincol, y = freshman_dataset$educprogramlyr)) +
   geom_point(position = "jitter")
 
-ggplot()
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$college, y = freshman_dataset$pnshdeviance6)) +
+  geom_point(position = "jitter")
+
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$college, y = freshman_dataset$pnshfrgrds6)) +
+  geom_point(position = "jitter")
+
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$college, y = freshman_dataset$rwrdfrgrds6)) +
+  geom_point(position = "jitter")
+
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$college, y = freshman_dataset$sex)) +
+  geom_point(position = "jitter")
+
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$currntcolaspir, y = freshman_dataset$rwrdfrgrdslyr)) +
+  geom_point(position = "jitter")
+
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$currntcolaspir, y = freshman_dataset$pnshfrgrdslyr)) +
+  geom_point(position = "jitter")
 ```
 
 4. Create at least three variations of the plots you've already made by modifying some of the arguments we covered in class (i.e. `position`, `scale`, `size`, `linetype` etc.). Do any of these modifications help you understand your data better? Why or why not? Do any of them create a misleading interpretation of the relationships between your variables? If yes, how so?
@@ -39,8 +61,19 @@ ggplot(data = freshman_dataset,
   geom_abline(method = "lm",
               se = FALSE)
   
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$currntcolaspir, y = freshman_dataset$pnshfrgrdslyr)) +
+  geom_jitter(alpha = 0.25,
+              shape= 1) +
+  geom_abline(method = "lm",
+              se = TRUE)
 
-
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$college, y = freshman_dataset$sex)) +
+  geom_jitter(alpha = 0.5,
+              shape = 1) +
+  geom_abline(method = "lm",
+             se = FALSE)
 ```
 5. From the plots you've created thus far, do any of them seem appropriate for a general audience? Why or why not? If so, what do you think you'd still need to do to make them more suitable as explanatory visualizations? 
 
