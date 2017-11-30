@@ -1,0 +1,46 @@
+---
+title: "Lab 11 - Data, Aesthetics, & Geometries"
+author: "Jackson Nahpi"
+date: "November 9, 2017"
+output: html_document
+---
+
+Complete the following exercises below. Knit together the PDF document and commit both the Lab 11 RMD file and the PDF document to Git. Push the changes to GitHub so both documents are visible in your public GitHub repository. 
+
+1. Which variables in your dataset are you interested in visualizing? Describe the level of measurement of these variables and what type of geography you think is appropriate to represent these variables. Give your reasoning for choosing the `geom_()` you selected. 
+
+I would like to visualize the relation between educational programs and college aspirations.
+
+2. Is your data in the proper format to visualize the data in the way you want? Why or why not? *If you need/want to change the structure of your data, do it below.* 
+
+3. Create at least two different exploratory plots of the variables you chose using the skills we covered in class today. What types of mapping aesthetics did you choose and why? What do these plots tell you about your data?
+```{r}
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$probfincol, y = freshman_dataset$educprogram6)) +
+  geom_point(position = "jitter")
+
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$probfincol, y = freshman_dataset$educprogram13)) +
+  geom_point(position = "jitter")
+
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$probfincol, y = freshman_dataset$educprogramlyr)) +
+  geom_point(position = "jitter")
+
+ggplot()
+```
+
+4. Create at least three variations of the plots you've already made by modifying some of the arguments we covered in class (i.e. `position`, `scale`, `size`, `linetype` etc.). Do any of these modifications help you understand your data better? Why or why not? Do any of them create a misleading interpretation of the relationships between your variables? If yes, how so?
+```{r}
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$probfincol, y = freshman_dataset$educprogram6)) +
+  geom_jitter(alpha = 0.25,
+              shape = 1) +
+  geom_abline(method = "lm",
+              se = FALSE)
+  
+
+
+```
+5. From the plots you've created thus far, do any of them seem appropriate for a general audience? Why or why not? If so, what do you think you'd still need to do to make them more suitable as explanatory visualizations? 
+
