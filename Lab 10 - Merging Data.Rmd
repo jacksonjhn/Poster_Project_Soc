@@ -78,41 +78,166 @@ print(left_join(x = lab_dataset_v1, y = lab_dataset_v2, by = c("prntsat6" = "prn
 print(right_join(x = lab_dataset_v1, y = lab_dataset_v2, by = c("prntsat6" = "prntsat13")))
 ```
 
-
+For the first left join the two tables were joined depending on whether both prntsat6 had the same values as prntsat13 giving us all the columns in order of prntsat6 ordering. The second join, the right_join, gives us a table 
 
 5. Do the same thing with the filtering joins. What was the result? Give an example of a case in which a `semi_join()` or an `anti_join()` might be used with your primary dataset
 
 ```{r}
-semi_join()
-anti_join()
+semi_join(x = lab_dataset_v1, y = lab_dataset_v2, by = c("prntsat6" = "prntsat13"))
+anti_join(x = lab_dataset_v1, y = lab_dataset_v2, by = c("prntsat6" = "prntsat13"))
 ```
 6. What happens when you apply the set operations joins to your tables? Are these functions useful for you for this project? Explain why or why not. If not, give an example in which one of them might be usefully applied to your data. 
 
+These joins are most likely not useful to me in this project since each rows variables are all related to a singular person therefore it isn't very useful to manipulate each columns row values individually using join functions.
 
 
 7. If you have any reason to compare tables, apply `setequal()` below. What were the results? 
 ```{r}
-setequal()
+dplyr::setequal(x = lab_dataset_v1, y = lab_dataset_v2)
 ```
 
 8. What is the purpose of binding data and why might you need to take extra precaution when carrying out this specific form of data merging? If your data requires any binding, carry out the steps below and describe what was accomplished by your merge.
 
-
+Binds are used to combine two data frames together and depending on which way you bind you columns(or rows) you can either be adding the left or the right of the data frame. A precaution when conducting this type of merge is to make sure that the rows or columns are in the same order in each of the data frames. What I mean by this is that by adding one column to another column the rows may be linked to specific observations an by blindly merging them you may accidentally mess up the variables related to each observation. My data does require merging using colbind but I will do this below on question 10.
 
 9. Do you need to merge multiple tables together using the same type of merge? If so, utilize the `reduce()` function from the `purrr` package to carry out the appropriate merge below. 
 
-
+No I do not require the merging of multiple tables
 
 10. Are there any other steps you need to carry out to further clean, transform, or merge your data into one, final, tidy dataset? If so, describe what they are and carry them out below.
+```{r}
+freshman_dataset <- freshman_fall %>% 
+  dplyr::select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
+
+sex_vector <- ifelse(freshman_fall$sex == "M", 0, 1)
+
+sex_vector <- data.frame(sex_vector)
+
+freshman_dataset <- bind_cols(sex_vector, freshman_dataset)
+
+freshman_dataset <- na.omit(freshman_dataset)
+
+names(freshman_dataset) <- c("sex",
+          "caseid",
+          "college",
+          "prntsat6", 
+          "prntsat13", 
+          "prntsatlyr", 
+          "checkhw6", 
+          "rwrdfrgrds6", 
+          "pnshfrgrds6", 
+          "pnshdeviance6", 
+          "artmusm6", 
+          "scimusm6", 
+          "educprogram6",
+          "checkhw13", 
+          "rwrdfrgrds13", 
+          "pnshfrgrds13", 
+          "pnshdeviance13", 
+          "artmusm13", 
+          "scimusm13", 
+          "educprogram13",
+          "checkhwlyr", 
+          "rwrdfrgrdslyr", 
+          "pnshfrgrdslyr", 
+          "pnshdeviancelyr", 
+          "musmlyr", 
+          "educprogramlyr", 
+          "currntcolaspir", 
+          "probfincol1yr",
+          "probfincol2yr",
+          "probfincol",
+          "probextraeduc",
+          "probfingraddeg"
+         )
+
+freshman_dataset <- transform(freshman_dataset,
+                              caseid = as.numeric(caseid),
+                              prntsat6 = as.numeric(prntsat6),
+                              prntsat13 = as.numeric(prntsat13),
+                              prntsatlyr = as.numeric(prntsatlyr)
+                              )
+
+freshman_dataset <- transform(freshman_dataset,
+                              checkhw6 = as.numeric(checkhw6),
+                              rwrdfrgrds6 = as.numeric(rwrdfrgrds6),
+                              pnshfrgrds6 = as.numeric(pnshfrgrds6),
+                              pnshdeviance6 = as.numeric(pnshdeviance6),
+                              artmusm6 = as.numeric(artmusm6), 
+                              scimusm6 = as.numeric(scimusm6),
+                              educprogram6 = as.numeric(educprogram6)
+                              )
+
+freshman_dataset <- transform(freshman_dataset,
+                              checkhw13 = as.numeric(checkhw13),
+                              rwrdfrgrds13 = as.numeric(rwrdfrgrds13),
+                              pnshfrgrds13 = as.numeric(pnshfrgrds13),
+                              pnshdeviance13 = as.numeric(pnshdeviance13),
+                              artmusm13 = as.numeric(artmusm13),
+                              scimusm13 = as.numeric(scimusm13),
+                              educprogram13 = as.numeric(educprogram13)
+                              )
+                              
+freshman_dataset <- transform(freshman_dataset,
+                              checkhwlyr = as.numeric(checkhwlyr),
+                              rwrdfrgrdslyr = as.numeric(rwrdfrgrdslyr),
+                              pnshfrgrdslyr = as.numeric(pnshfrgrdslyr),
+                              pnshdeviancelyr = as.numeric(pnshdeviancelyr),
+                              musmlyr = as.numeric(musmlyr),
+                              educprogramlyr = as.numeric(educprogramlyr)
+                              )
+
+freshman_dataset <- transform(freshman_dataset,
+                              currntcolaspir = as.numeric(currntcolaspir),
+                              probfincol1yr = as.numeric(probfincol1yr),
+                              probfincol2yr = as.numeric(probfincol2yr),
+                              probfincol = as.numeric(probfincol),
+                              probextraeduc = as.numeric(probextraeduc),
+                              probfingraddeg = as.numeric(probfingraddeg)
+                              )
 
 
+freshman_dataset <- filter(freshman_dataset, 
+                           checkhw6 < 6 & 
+                             rwrdfrgrds6 < 6 &
+                             pnshfrgrds6 < 6 &
+                             pnshdeviance6 < 6 &
+                             artmusm6 < 6 &
+                             scimusm6 < 6 &
+                             educprogram6 < 6 &
+                             checkhw13 < 6 &
+                             rwrdfrgrds13 < 6 &
+                             pnshfrgrds13 < 6 &
+                             pnshdeviance13 < 6 & 
+                             artmusm13 < 6 &  
+                             scimusm13 < 6 &  
+                             educprogram13 < 6 &
+                             checkhwlyr < 6 & 
+                             rwrdfrgrdslyr < 6 & 
+                             pnshfrgrdslyr < 6 &  
+                             pnshdeviancelyr < 6 & 
+                             musmlyr < 6 & 
+                             educprogramlyr < 6 & 
+                             probfincol1yr < 97 &
+                             probfincol2yr < 97 & 
+                             probfincol < 97 & 
+                             probextraeduc < 97 & 
+                             probfingraddeg < 97
+                             )
 
+freshman_dataset <- mutate(freshman_dataset,
+                           musm6 = round((freshman_dataset$artmusm6 + 
+                                            freshman_dataset$scimusm6)/2, 0))
+  
+freshman_dataset <- mutate(freshman_dataset, 
+                           musm13 = round((freshman_dataset$artmusm13 + 
+                                             freshman_dataset$scimusm13)/2, 0))
 
+freshman_dataset$artmusm6 <- NULL
+freshman_dataset$scimusm6 <- NULL
+freshman_dataset$artmusm13 <- NULL
+freshman_dataset$scimusm13 <- NULL
+```
 
-
-
-
-
-
-
+I first started out by binding my overall table to the sex vector. I then went through removing all NAs and conversion of all variables into numeric form by using the 'transform' function. Thirdly, I went through and filtered out all variable values that were related to no response or don't knows. Fourthly, I mutated my dataset by combing the artmusm and scimusm variables for ages 6 and 13 into 2 variables (reduced 4 variables down to 2) and then devided those new variables musm6(13) by 2, this way I can keep the original measureing rubric that was used in the original study. Lastly, I removed the 4 variables that were reduced to 2 variables since they were no longer needed.
 
