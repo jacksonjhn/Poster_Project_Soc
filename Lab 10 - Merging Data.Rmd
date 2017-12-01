@@ -78,7 +78,7 @@ print(left_join(x = lab_dataset_v1, y = lab_dataset_v2, by = c("prntsat6" = "prn
 print(right_join(x = lab_dataset_v1, y = lab_dataset_v2, by = c("prntsat6" = "prntsat13")))
 ```
 
-For the first left join the two tables were joined depending on whether both prntsat6 had the same values as prntsat13 giving us all the columns in order of prntsat6 ordering. The second join, the right_join, gives us a table 
+For the first left join the two tables were joined depending on whether both prntsat6 had the same values as prntsat13 giving us all the columns in order of prntsat6 ordering. The second join, the right_join, does the same thing as the left join but using the right column (prntsat13) as the lead column of the join.
 
 5. Do the same thing with the filtering joins. What was the result? Give an example of a case in which a `semi_join()` or an `anti_join()` might be used with your primary dataset
 
@@ -217,13 +217,19 @@ freshman_dataset <- filter(freshman_dataset,
                              pnshfrgrdslyr < 6 &  
                              pnshdeviancelyr < 6 & 
                              musmlyr < 6 & 
-                             educprogramlyr < 6 & 
                              probfincol1yr < 97 &
                              probfincol2yr < 97 & 
                              probfincol < 97 & 
                              probextraeduc < 97 & 
                              probfingraddeg < 97
                              )
+
+freshman_dataset <- freshman_dataset %>%
+  filter(educprogramlyr != 97 & educprogramlyr != 98) %>%
+  mutate(educprogramlyr = ifelse(test = educprogramlyr >= 1, 
+                             yes = 1, 
+                             no = 0))
+
 
 freshman_dataset <- mutate(freshman_dataset,
                            musm6 = round((freshman_dataset$artmusm6 + 
