@@ -1,0 +1,57 @@
+---
+title: "Lab 12 - Statistics, Coordinates, Facets, and Themes"
+author: "Jackson Nahpi"
+date: "November 14, 2017"
+output: html_document
+---
+
+Complete the following exercises below. Knit together the PDF document and commit both the Lab 12 RMDfile and the PDF document to Git. Push the changes to GitHub so both documents are visible in your public GitHub repository.
+
+1. Choose one or more graphics you created for Lab 11 and either experiment with the underlying statistical layer if it already has one (i.e. if you made a histogram experiement with different bin widths) or add a separate statistical layer to your plot (i.e. a smooothing curve). Choose something you think will offer meaningful insight and describe why you made the choice you did. What additional information does this provide viewers of your graphic?
+
+```{r}
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$probfincol, y = freshman_dataset$educprogram6)) +
+  geom_jitter(alpha = 0.25,
+              shape = 1) +
+  geom_abline(method = "lm",
+              se = FALSE)
+```
+
+
+2. With the same or a different plot created in Lab 11, experiment with zooming in on specific areas of your graphic and changing the aspect ratio. Are their any benefits/drawbacks with either or both of these approaches for the visualizations you've created? What are they? 
+
+```{r}
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$probfincol, y = freshman_dataset$educprogram6)) +
+  geom_jitter(alpha = 0.25,
+              shape = 1) +
+  geom_abline(method = "lm",
+              se = FALSE)
+```
+3. Try facetting a plot you have made by another categorical variable in your data (this can even be as simple as Male/Female). What is the difference between `facet_wrap()` and `facet_grid()`? How might facetting be useful in data visualization?
+```{r}
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$college, y = freshman_dataset$sex)) +
+  geom_jitter(alpha = 0.5,
+              shape = 1) +
+  facet_grid(. ~ freshman_dataset$sex)
+```
+Facet wrap is not very useful for this facet but facet grid is very useful graphic. However the sex graphic is significant since in my dataset females make up 54% of the population.
+
+```{r}
+sum(freshman_dataset$sex)
+```
+4. Use the `theme()` layer to change the appearance of a plot of your choice including the
+  * plot, axes, and legend titles
+  * axes tick marks
+  * text size
+  * legend position
+```{r}
+
+```
+5. Create three versions of a graphic of your choice using different built-in themes or a theme created from `ggthemes`. Which ones do you think are best for presenting in an academic journal? A poster session? What are the qualities of the themes that you choice that you think make them more appropriate for presentation?
+```{r}
+
+```
+
