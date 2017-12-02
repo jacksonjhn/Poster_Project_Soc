@@ -11,17 +11,8 @@ Using your own dataset (which may include more than one table) carry out the fol
 
 **Before you begin: as many of you have large datasets, you're going to want to select only the variables you're interested in utilizing for this project (ideally no more than twenty columns but perhaps much smaller) so you don't have R Studio's memory working on the entire dataset. The example code provided below can be modified to allow you to subset your data to only the variables you wish to use. First, read in your complete dataset and save it as** `data`. **Then, add the names of the variables you wish to use for your poster project to the** `select` **function, separated by commas. Run the two lines of code to save this new, smaller version of your data to** `data_subset`. **Use this smaller dataset to complete the rest of the lab**
 
+
 ```{r, eval = FALSE}
-# Read in your data with the appropriate function
-data <- 
-  
-data_subset <- freshman_spring %>%
-  select(w2q1)
-colnames(data_subset)[colnames(data_subset)=="w2q1"] <- "eyy"
-
-```
-
-```{r}
 freshman_dataset <- freshman_fall %>% 
   dplyr::select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
 
