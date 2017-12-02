@@ -11,11 +11,11 @@ Complete the following exercises below. Knit together the PDF document and commi
 
 ```{r}
 ggplot(data = freshman_dataset,
-       aes(x = freshman_dataset$probfincol, y = freshman_dataset$educprogram6)) +
+       aes(x = freshman_dataset$probfincol, y = freshman_dataset$educprogramlyr)) +
   geom_jitter(alpha = 0.25,
               shape = 1) +
   geom_abline(method = "lm",
-              se = FALSE)
+              se = FALSE) 
 ```
 
 
@@ -39,6 +39,7 @@ ggplot(data = freshman_dataset,
 ```
 Facet wrap is not very useful for this facet but facet grid is very useful graphic. However the sex graphic is significant since in my dataset females make up 54% of the population.
 
+
 ```{r}
 sum(freshman_dataset$sex)
 ```
@@ -48,10 +49,34 @@ sum(freshman_dataset$sex)
   * text size
   * legend position
 ```{r}
-
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$college, y = freshman_dataset$sex)) +
+  geom_jitter(alpha = 0.5,
+              shape = 1) +
+  facet_grid(. ~ freshman_dataset$sex) + 
+  theme(text = )
 ```
 5. Create three versions of a graphic of your choice using different built-in themes or a theme created from `ggthemes`. Which ones do you think are best for presenting in an academic journal? A poster session? What are the qualities of the themes that you choice that you think make them more appropriate for presentation?
 ```{r}
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$college, y = freshman_dataset$sex)) +
+  geom_jitter(alpha = 0.5,
+              shape = 1) +
+  facet_grid(. ~ freshman_dataset$sex) +
+  theme_economist()
 
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$college, y = freshman_dataset$sex)) +
+  geom_jitter(alpha = 0.5,
+              shape = 1) +
+  facet_grid(. ~ freshman_dataset$sex) +
+  theme_fivethirtyeight()
+
+ggplot(data = freshman_dataset,
+       aes(x = freshman_dataset$college, y = freshman_dataset$sex)) +
+  geom_jitter(alpha = 0.5,
+              shape = 1) +
+  facet_grid(. ~ freshman_dataset$sex) +
+  theme_wsj()
 ```
 
