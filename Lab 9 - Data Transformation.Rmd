@@ -92,7 +92,8 @@ freshman_dataset <- freshman_dataset %>%
                              yes = 1, 
                              no = 0))
 ```
-    I selected all of the variables I want to use, I chose the sex of the respondents separate from the other variables since I needed to recode sex from a character to a numeric.
+    I selected all of the variables I want to use, I chose the sex of the respondents separate from the other variables since I needed to recode sex from a character to a numeric. I also selected race and recoded it from a character to a numeric. Lastly, I recoded educprogramlyr from a continuous variable to a binary variable.
+    
      
 7. `R` also comes with a set of boolean operators that you can use to combine multiple logical tests into a single test. These include `&` (and), `|` (or), and `!` (not). Instead of using the `&` operator, you can also pass several logical tests to `filter()`, separated by commas. `is.na()` will also come in handy.   
 
@@ -128,6 +129,7 @@ filter(freshman_dataset <- filter(freshman_dataset,
 )
 ```
 I used this line of code in the previous lab to remove all the observation that contained values that were seen as missing or didn't know. 
+
  
   b. Print out all of the observations in your data in which none of variables are `NA`.
 ```{r}
@@ -136,13 +138,16 @@ print(freshman_dataset)
 ```
 In lab 8 I already used code to remove all NA's from the dataset using the command above.
 
+
 8. `arrange()` can be used to rearrange rows according to any type of data. If you pass `arrange()` a character variable, for example, `R` will rearrange the rows in alphabetical order according to values of the variable. If you pass a factor variable, `R` will rearrange the rows according to the order of the levels in your factor (running `levels()` on the variable reveals this order).
 
 By default, `arrange()` arranges the rows from smallest to largest. Rows with the smallest value of the variable will appear at the top of the data set. You can reverse this behavior with the `desc()` function. `arrange()` will reorder the rows from largest to smallest values of a variable if you wrap the variable name in `desc()` before passing it to `arrange()`.
 
   a. Which variable(s) in your dataset would be logical to arrange your data on? Explain your reasoning.
   
+  
   I don't think this question is relevant to my data since it doesn't need to be ordered by row and is not a longitudinal dataset.
+  
   
   b. Arrange your data by this/these variables and print the results. 
   
@@ -161,7 +166,9 @@ By default, `arrange()` arranges the rows from smallest to largest. Rows with th
 
   a. Pick at least one variable of interest to your project analysis.
   
+  
   The variables I feel that would be interesting to look at would be the standard deviation, variance, and mean of the variables involving what parents "blank" for their kids but across years of 6, 13, and their senior year.
+  
   
   b. Print out at least three summary statistics using `summarise()`. 
 ```{r}
@@ -198,6 +205,8 @@ Next to these `dplyr`-specific functions, you can also turn a logical test into 
 sex_vector <- ifelse(freshman_fall$sex == "M", 0, 1)
 ```
   b. Why did you choose the ones you did? What did you learn about your data from these summaries?
+  
+  
   I used the first one in order to change the sex vector into a numeric value instead of a character.
 
 
@@ -359,27 +368,16 @@ freshman_dataset$scimusm13 <- NULL
 ```
   b. What do the results tell you about different groups in you data?
 
+
 I used this to gather my variables and then group artmusm and scimusm visits into one, 
+
 
 12. The exercises so far have tried to get you to think about how to apply the five verbs of `dplyr` to your data. 
   
   a. Are there any specific transformations you want to make to your data? What are they and what aspect of your research question will they help you to answer?
   b. In a code chunk below, carry out all the data transformations you wish to perform on your data. Utilize the `%>%` operator to tie multiple commands together and make your code more readable and efficient. Remember to comment your code so it is clear why you doing things a certain way. 
   
-I already got all of my variables I want to use together.
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+I already got all of my variables I want to use together and made it more organized and readable in the above code chunk.
   
   
