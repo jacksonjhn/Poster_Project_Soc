@@ -83,6 +83,14 @@ freshman_dataset <- freshman_fall %>%
   select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
 
 sex_vector <- ifelse(freshman_fall$sex == "M", 0, 1)
+
+race_vector <- dplyr::recode(freshman_fall$w1qzeth, "B"=1,"W"=2,"A"=3,"H"=4)
+
+freshman_dataset <- freshman_dataset %>%
+  filter(educprogramlyr != 97 & educprogramlyr != 98) %>%
+  mutate(educprogramlyr = ifelse(test = educprogramlyr >= 1, 
+                             yes = 1, 
+                             no = 0))
 ```
     I selected all of the variables I want to use, I chose the sex of the respondents separate from the other variables since I needed to recode sex from a character to a numeric.
      
@@ -206,17 +214,24 @@ As with `arrange()`, `rank()` ranks values from the smallest to the largest.
   a. Using the `%>%` operator, first group your dataset by a meaningful variable, then perform a mutation that you're interested in. 
 ```{r}
 freshman_dataset <- freshman_fall %>% 
-  select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
+  dplyr::select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
 
 sex_vector <- ifelse(freshman_fall$sex == "M", 0, 1)
 
 sex_vector <- data.frame(sex_vector)
 
-freshman_dataset <- bind_cols(sex_vector, freshman_dataset)
+race_vector <- dplyr::recode(freshman_fall$w1qzeth, "B"=1,"W"=2,"A"=3,"H"=4)
+
+race_vector <- data.frame(race_vector)
+
+sex_and_ethnicity_vector <- bind_cols(sex_vector, race_vector)
+
+freshman_dataset <- bind_cols(sex_and_ethnicity_vector, freshman_dataset)
 
 freshman_dataset <- na.omit(freshman_dataset)
 
 names(freshman_dataset) <- c("sex",
+          "ethnicity",                  
           "caseid",
           "college",
           "prntsat6", 
@@ -249,6 +264,12 @@ names(freshman_dataset) <- c("sex",
           "probextraeduc",
           "probfingraddeg"
          )
+
+freshman_dataset <- freshman_dataset %>%
+  filter(educprogramlyr != 97 & educprogramlyr != 98) %>%
+  mutate(educprogramlyr = ifelse(test = educprogramlyr >= 1, 
+                             yes = 1, 
+                             no = 0))
 
 freshman_dataset <- transform(freshman_dataset,
                               caseid = as.numeric(caseid),
@@ -295,6 +316,7 @@ freshman_dataset <- transform(freshman_dataset,
                               probfingraddeg = as.numeric(probfingraddeg)
                               )
 
+
 freshman_dataset <- filter(freshman_dataset, 
                            checkhw6 < 6 & 
                              rwrdfrgrds6 < 6 &
@@ -315,7 +337,6 @@ freshman_dataset <- filter(freshman_dataset,
                              pnshfrgrdslyr < 6 &  
                              pnshdeviancelyr < 6 & 
                              musmlyr < 6 & 
-                             educprogramlyr < 6 & 
                              probfincol1yr < 97 &
                              probfincol2yr < 97 & 
                              probfincol < 97 & 
@@ -330,6 +351,11 @@ freshman_dataset <- mutate(freshman_dataset,
 freshman_dataset <- mutate(freshman_dataset, 
                            musm13 = round((freshman_dataset$artmusm13 + 
                                              freshman_dataset$scimusm13)/2, 0))
+
+freshman_dataset$artmusm6 <- NULL
+freshman_dataset$scimusm6 <- NULL
+freshman_dataset$artmusm13 <- NULL
+freshman_dataset$scimusm13 <- NULL
 ```
   b. What do the results tell you about different groups in you data?
 
