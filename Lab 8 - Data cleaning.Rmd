@@ -20,11 +20,18 @@ sex_vector <- ifelse(freshman_fall$sex == "M", 0, 1)
 
 sex_vector <- data.frame(sex_vector)
 
-freshman_dataset <- bind_cols(sex_vector, freshman_dataset)
+race_vector <- dplyr::recode(freshman_fall$w1qzeth, "B"=1,"W"=2,"A"=3,"H"=4)
+
+race_vector <- data.frame(race_vector)
+
+sex_and_ethnicity_vector <- bind_cols(sex_vector, race_vector)
+
+freshman_dataset <- bind_cols(sex_and_ethnicity_vector, freshman_dataset)
 
 freshman_dataset <- na.omit(freshman_dataset)
 
 names(freshman_dataset) <- c("sex",
+          "ethnicity",                  
           "caseid",
           "college",
           "prntsat6", 
