@@ -106,11 +106,58 @@ The results tell us that the two variables are not associated significantly sinc
 
   a. What is the correlation between these two variables? 
 
+
+```{r, echo = FALSE, warning = FALSE}
+lab13_vars <- freshman_dataset_v4 %>%
+  dplyr::select(probfincol, probfingraddeg)
+
+cor(lab13_vars$probfincol, lab13_vars$probfingraddeg)
+```
+The correlation between the perceived probability of finishing college and the percieved probability of finishing a grad degree is 0.30074.
+
+
   b. Create a scatterplot of the variables you selected. Does the correlation coefficient accurately represent the relationship between these two variables? Why or why not? 
+  
+  
+```{r, echo = FALSE, warning = FALSE}  
+plot(lab13_vars$probfincol, 
+     lab13_vars$probfingraddeg, 
+     main = "Probfincol vs. Probfingraddeg", 
+     xlab="Probfincol", 
+     ylab="Probfingraddeg", 
+     pch=19)  
+
+ggplot(data = lab13_vars,
+       aes(x = lab13_vars$probfincol, 
+           y = lab13_vars$probfingraddeg)) +
+  geom_point(position = "jitter",
+             alpha = 0.3)
+```
+The scatter plot does not do a very good job at showing a correlation since there are many variables that take the same value in this dataset. I used a ggplot with jitter and it helps show the relationship a pit better.
+
 
   c. Create a correlation matrix of your data using the `ggcorr` function from the `GGally` package. Be sure to label each cell with the correlation coefficient. 
+  
+  
+```{r, echo = FALSE, warning = FALSE}
+ggcorr(lab13_vars,
+       label = TRUE,
+       label_alpha = TRUE)
+
+ggcorr(freshman_dataset_v4[25:29],
+       label = TRUE,
+       label_alpha = TRUE)
+```
+
 
   d. What does this visual representation of correlation coefficients tell you about your data? Are there any relationships (or lack thereof) that are surprising to you? Why or why not?
 
+
+For my simple dataset it didn't help much since there was only one square, so I made one of these correlation coefficient visuals using all of the probabilities in the dataset. The interesting relationship that can be seen is the relationship between percieved probability of extra education and finishing grad school. Although this has some issues since some respondents may not know the difference between these two types of education.
+
+
   e. What are the limitations of correlation coefficients? Can they ever be misleading? If so, in what ways? 
+
+
+You have to be sure that the correlations are not spurious since two unrelated variables may appear to be related but in reality have no clear relationship among the two variables. Also reading the table may be confusing if one is unfamiliar with how to read them. I initially was confused by the way the table was set up and almost read the relationships incorrectly.
 
