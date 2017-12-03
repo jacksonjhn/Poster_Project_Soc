@@ -13,26 +13,88 @@ Complete the following exercises below and include all code used to find the ans
 
   a. Describe any modifications made to your data for the chi-square test and the composition of the variables used in the test (e.g., study time is measured using a three-category ordinal variable with categories indicating infrequent studying, medium studying, and frequent studying).
 
-I have not needed to do any modification to my data to put it into a categorical format.
+
+I have not needed to do any modification to my data to put it into a categorical format since the entire dataset is categorical data. The two categorical variables I first want to look at are sex and its relation to college choice.
+
 
   b. Does there appear to be an association between your two variables? Explain your reasoning.
 
-Yes, the variable for current college aspirations(currntcolaspir) seems to be related to both rewards for good grades(rwrdfrgrdslyr) and punishment for bad grades(pnshfrgrdslyr). This relation was seen when graphing them on dot plots in lab 11.
+
+Yes it seems that women tend to go to private research universities more than males whereas males are more evenly distributed between both private and public research universities.
+
 
   c. What are the degrees of freedom for this test and how is this calculated?
+  
+  
+My degrees of freedom would be 2 since I have 2 rows and 3 columns in the table and to calculate the degrees of freedom value is by ((2-1)(3-1)=2).
+  
 
   d. What if the critical value for the test statistic? What is the obtained value for the test statistic?
+```{r, echo = FALSE, warning = FALSE}
+sex_and_college_table <- freshman_dataset_v4 %>%
+  dplyr::select(sex, college)
+
+CrossTable(table(sex_and_college_table), 
+           digits = 5,
+           prop.r = FALSE, 
+           prop.c = FALSE, 
+           prop.t = FALSE, 
+           prop.chisq = FALSE) 
+```
+I calculated the critical values by hand and will give report them below but to understand the results the values for the coded varaibles is as follows: sex; male = 0 and female = 1, college; liberal arts college = 1, private research university = 2, public research university = 3. Critical values are as follows:
+Crit val(0,1) = 4.5740815817
+Crit val(0,1) = 3.3494902823
+Crit val(0,1) = 1.7986034217
+Crit val(0,1) = 3.3250304352
+Crit val(0,1) = 2.4734937825
+Crit val(0,1) = 1.3074561551
+Summation of Crit values = 16.8281556585
+Chi-square value(0.05) = 5.991
+Chi-square value(0.01) = 9.210
+```{r, echo = FALSE, warning = FALSE}
+CrossTable(table(sex_and_college_table), 
+           digits = 5,
+           prop.r = FALSE, 
+           prop.c = FALSE, 
+           prop.t = FALSE, 
+           prop.chisq = TRUE,
+           chisq = TRUE) 
+```
+
 
   e. How do you interpret the results of this test and the implications for your theoretical arguments about these two variables?
+
+
+The results we get show that the relationship between the two variables is significant since the Critical value we got is 16.82 whereas the chi-square value for significance at the 0.01 level is only 9.210, our result is actually significant all the way out to the 0.001 level. The p value is also significant, it is 0.000216 which means that the odds that this relationship is up to chance is about 0.000216 which means this relation is highly significant between sex of the repondent and the type of college they choose to attend.
 
 
 **2. Select one continuous variable and one categorical variable from your dataset whose association you're interested in exploring.** *Again, note that you'll need to create a categorical version of your independent variable to make this work.*
 
   a. Describe any modifications made to your data for the ANOVA test and the composition of the variables used in the test (e.g., college rank is measured using a four-category variable with values indicating freshman, sophomore, junior, and senior class).
+  
+  
+I did not have to do any modification for this question. I am choosing respondents percieved probability of completing college (the continous variable) and the levels of punishment for their grades in their last year of school.
+```{r, echo = FALSE, warning = FALSE}
+probfincol_and_pnshfrgrdslyr_table <- freshman_dataset_v4 %>%
+  dplyr::select(probfincol, pnshfrgrdslyr)
+```
+  
 
   b. What are the degrees of freedom (both types) for this test and how are they calculated?
+  
+  
+My degrees of freedom for df1 = 3 and my degrees of freedom for df2 = 3645. Df1 is calculated by taking the groups you are looking at and subtracting 1 (4-1=3) and df2 is found by taking the observations and subtracting the number of groups from it (3,649-4=3,645).
+  
 
   c. What is the obtained value of the test statistic?
+
+
+```{r}  
+ results <- aov(pain ~ drug, data = migraine)
+summary(results)
+```
+The test statistic from the F-table is 
+  
 
   d. What do the resuts tell you about the association between these two variables? What does this mean for your theoretical arguments about these variables?
 
