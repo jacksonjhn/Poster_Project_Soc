@@ -4,7 +4,6 @@ author: "Jackson Nahpi"
 date: "November 21, 2017"
 output:
   pdf_document: default
-  html_document: default
 ---
 
 Complete the following exercises below and include all code used to find the answers. Knit together the PDF document and commit both the Lab 13 RMD file and the PDF document to Git. Push the changes to GitHub so both documents are visible in your public GitHub repository.
