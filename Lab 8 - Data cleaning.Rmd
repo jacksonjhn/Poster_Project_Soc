@@ -3,8 +3,8 @@ title: "Lab 8"
 author: "Jackson Nahpi"
 date: "October 27, 2017"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 Using your own dataset (which may include more than one table) carry out the following data cleaning steps. Knit together the PDF document and commit both the Lab 8 RMD file and the PDF document to Git. Push the changes to GitHub so both documents are visible in your public GitHub repository. 
@@ -12,7 +12,9 @@ Using your own dataset (which may include more than one table) carry out the fol
 **Before you begin: as many of you have large datasets, you're going to want to select only the variables you're interested in utilizing for this project (ideally no more than twenty columns but perhaps much smaller) so you don't have R Studio's memory working on the entire dataset. The example code provided below can be modified to allow you to subset your data to only the variables you wish to use. First, read in your complete dataset and save it as** `data`. **Then, add the names of the variables you wish to use for your poster project to the** `select` **function, separated by commas. Run the two lines of code to save this new, smaller version of your data to** `data_subset`. **Use this smaller dataset to complete the rest of the lab**
 
 
-```{r, eval = FALSE}
+```{r, echo = FALSE}
+knitr::opts_chunk$set(error = TRUE)
+
 freshman_dataset <- freshman_fall %>% 
   dplyr::select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
 
@@ -117,7 +119,7 @@ freshman_dataset <- transform(freshman_dataset,
                               )
 
 
-freshman_dataset <- filter(freshman_dataset, 
+freshman_dataset_v2 <- filter(freshman_dataset, 
                            checkhw6 < 6 & 
                              rwrdfrgrds6 < 6 &
                              pnshfrgrds6 < 6 &
@@ -144,23 +146,23 @@ freshman_dataset <- filter(freshman_dataset,
                              probfingraddeg < 97
                              )
 
-freshman_dataset <- mutate(freshman_dataset,
-                           musm6 = round((freshman_dataset$artmusm6 + 
-                                            freshman_dataset$scimusm6)/2, 0))
+freshman_dataset_v3 <- mutate(freshman_dataset_v2,
+                           musm6 = round((freshman_dataset_v2$artmusm6 + 
+                                            freshman_dataset_v2$scimusm6)/2, 0))
   
-freshman_dataset <- mutate(freshman_dataset, 
-                           musm13 = round((freshman_dataset$artmusm13 + 
-                                             freshman_dataset$scimusm13)/2, 0))
+freshman_dataset_v4 <- mutate(freshman_dataset_v3, 
+                           musm13 = round((freshman_dataset_v3$artmusm13 + 
+                                             freshman_dataset_v3$scimusm13)/2, 0))
 
-freshman_dataset$artmusm6 <- NULL
-freshman_dataset$scimusm6 <- NULL
-freshman_dataset$artmusm13 <- NULL
-freshman_dataset$scimusm13 <- NULL
+freshman_dataset_v4$artmusm6 <- NULL
+freshman_dataset_v4$scimusm6 <- NULL
+freshman_dataset_v4$artmusm13 <- NULL
+freshman_dataset_v4$scimusm13 <- NULL
 ```
 2. Preview the first and last 15 rows of your data. Is you dataset tidy? If not, what principles of tidy data does it seem to be violating?
-```{r}
-head(freshman_dataset, n = 15)
-tail(freshman_dataset, n = 15)
+```{r, echo = FALSE}
+head(freshman_dataset_v4, n = 15)
+tail(freshman_dataset_v4, n = 15)
 ```
 
 
@@ -170,8 +172,8 @@ After I renamed the variables the data seems relatively tidy with no NAs present
 3. Create a histogram for at least two variables you plan to focus on for your study. Describe what these plots show you about these variables. 
 
 
-```{r}
-check_HW_senior <- freshman_dataset$checkhwlyr
+```{r, echo = FALSE}
+check_HW_senior <- freshman_dataset_v4$checkhwlyr
 
 hist(check_HW_senior,
      right = FALSE
@@ -181,8 +183,8 @@ The histogram shows us the distribution of how much students got their homework 
 
 
 4. Create at least one bivariate plot showing the relationship between two variables of interest. What does/do the(se) plot(s) tell you about the association between these two variables?
-```{r}
-attach(freshman_dataset)
+```{r, echo = FALSE}
+attach(freshman_dataset_v4)
 plot(checkhwlyr, probfincol1yr, main = "Bivariate plot",
      xlab = "check_hw_lyr", ylab = "prob_fin_col1yr",
      pch = 19
@@ -207,8 +209,8 @@ I had to merge the artmusm and scimusm columns into one to represent total museu
 
 7. What is the class of each of the variables in your analysis? Are these classes appropriate for the type of measurement they purport to capture? Explain your reasoning. 
 
-```{r}
-sapply(freshman_dataset, class)
+```{r, echo = FALSE}
+sapply(freshman_dataset_v4, class)
 ```
 All of my variables are classified as integer with the exception to college, which is classified as numeric
 
@@ -236,8 +238,10 @@ There are none.
 
 
 12. Create a boxplot of your data (you can create an individual boxplot for each variable if there are too many variables in your dataset to meaningfully visualize them all in one plot). Are there any outliers? If so, what are they and to which variable do they correspond? Do any of these outliers seem like obvious errors? If so, why? 
-```{r}
-boxplot(freshman_dataset$probfingraddeg, horizontal = TRUE)
+
+
+```{r, echo = FALSE}
+boxplot(freshman_dataset_v4t$probfingraddeg, horizontal = TRUE)
 ```
 There are a few outliers who specifically say they are highly unlikely to finish a graduate degree. I probably will not use very many boxplots for my research later though
 
