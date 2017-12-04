@@ -20,6 +20,7 @@ ggplot(data = freshman_dataset_v4,
 
 2. With the same or a different plot created in Lab 11, experiment with zooming in on specific areas of your graphic and changing the aspect ratio. Are their any benefits/drawbacks with either or both of these approaches for the visualizations you've created? What are they? 
 
+
 ```{r, echo = FALSE, warning = FALSE}
 ggplot(data = freshman_dataset_v4,
        aes(x = freshman_dataset_v4$probfincol, y = freshman_dataset_v4$educprogram6)) +
@@ -29,6 +30,9 @@ ggplot(data = freshman_dataset_v4,
               se = FALSE) +
   scale_y_continuous(limits = c(8,10))
 ```
+I am better able to see the density of dots in my table however it doesn't really help me in seeing anything significant in the table. This is most likely due to using mostly categorical data so a heat map or something of the like may be more useful.
+
+
 3. Try facetting a plot you have made by another categorical variable in your data (this can even be as simple as Male/Female). What is the difference between `facet_wrap()` and `facet_grid()`? How might facetting be useful in data visualization?
 ```{r, echo = FALSE, warning =  FALSE}
 ggplot(data = freshman_dataset_v4,
@@ -52,11 +56,16 @@ ggplot(data = freshman_dataset_v4,
   geom_jitter(alpha = 0.5,
               shape = 1) +
   facet_grid(. ~ freshman_dataset_v4$sex) + 
-  theme(text = )
+  theme(panel.background = element_blank(),
+        panel.grid = element_blank(),
+        legend.background = element_blank(),
+        axis.ticks = element_blank()
+        )
 ```
 
 
 5. Create three versions of a graphic of your choice using different built-in themes or a theme created from `ggthemes`. Which ones do you think are best for presenting in an academic journal? A poster session? What are the qualities of the themes that you choice that you think make them more appropriate for presentation?
+
 
 ```{r, echo = FALSE, warning = FALSE}
 ggplot(data = freshman_dataset_v4,
@@ -64,20 +73,24 @@ ggplot(data = freshman_dataset_v4,
   geom_jitter(alpha = 0.5,
               shape = 1) +
   facet_grid(. ~ freshman_dataset_v4$sex) +
-  theme_economist()
+  theme_economist() +
+  labs(title ="Effect of Sex on College selection", x = "College Type", y = "Sex")
 
 ggplot(data = freshman_dataset_v4,
        aes(x = freshman_dataset_v4$college, y = freshman_dataset_v4$sex)) +
   geom_jitter(alpha = 0.5,
               shape = 1) +
   facet_grid(. ~ freshman_dataset_v4$sex) +
-  theme_fivethirtyeight()
+  theme_fivethirtyeight() +
+  labs(title ="Effect of Sex on College selection", x = "College Type", y = "Sex")
 
 ggplot(data = freshman_dataset_v4,
        aes(x = freshman_dataset_v4$college, y = freshman_dataset_v4$sex)) +
   geom_jitter(alpha = 0.5,
               shape = 1) +
   facet_grid(. ~ freshman_dataset_v4$sex) +
+  labs(title ="Effect of Sex on College selection", x = "College Type", y = "Sex") +
   theme_wsj()
 ```
+I like the themes that are five thirty eight and the economist would be good for the poster presentation, however for this specific chart I think I will need to remove certain elements that are unnecessary for the graphic being presented in the chart. For a journal a more boring one kind of like the wall street journal one may be more appropriate since it doesn't have a whole lot going on.
 
