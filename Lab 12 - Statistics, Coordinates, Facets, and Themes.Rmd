@@ -34,6 +34,8 @@ I am better able to see the density of dots in my table however it doesn't reall
 
 
 3. Try facetting a plot you have made by another categorical variable in your data (this can even be as simple as Male/Female). What is the difference between `facet_wrap()` and `facet_grid()`? How might facetting be useful in data visualization?
+
+
 ```{r, echo = FALSE, warning =  FALSE}
 ggplot(data = freshman_dataset_v4,
        aes(x = freshman_dataset_v4$college, y = freshman_dataset_v4$sex)) +
@@ -41,6 +43,8 @@ ggplot(data = freshman_dataset_v4,
               shape = 1) +
   facet_grid(. ~ freshman_dataset_v4$sex)
 ```
+
+
 Facet wrap is not very useful for this facet but facet grid is very useful graphic. However the sex graphic is significant since in my dataset females make up 54% of the population.
 
 
