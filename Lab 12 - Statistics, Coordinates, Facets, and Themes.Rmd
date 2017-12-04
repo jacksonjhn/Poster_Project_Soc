@@ -23,12 +23,11 @@ ggplot(data = freshman_dataset_v4,
 
 ```{r, echo = FALSE, warning = FALSE}
 ggplot(data = freshman_dataset_v4,
-       aes(x = freshman_dataset_v4$probfincol, y = freshman_dataset_v4$educprogram6)) +
-  geom_jitter(alpha = 0.25,
-              shape = 1) +
+       aes(x = freshman_dataset_v4$probfincol, y = freshman_dataset_v4$rwrdfrgrdslyr)) +
+  geom_jitter(alpha = 0.25) +
   geom_abline(method = "lm",
               se = FALSE) +
-  scale_y_continuous(limits = c(8,10))
+  scale_x_continuous(limits = c(8,10))
 ```
 I am better able to see the density of dots in my table however it doesn't really help me in seeing anything significant in the table. This is most likely due to using mostly categorical data so a heat map or something of the like may be more useful.
 
