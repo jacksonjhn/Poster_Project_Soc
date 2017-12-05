@@ -1,0 +1,45 @@
+---
+title: "Visualization 1"
+author: "Jackson Nahpi"
+date: "December 5, 2017"
+output: pdf_document
+---
+
+```{r, echo = FALSE, warning = FALSE}
+mosaic_subset <- freshman_dataset_v4 %>%
+  dplyr::select(ethnicity, college, sex)
+
+vnames <- list(set_varnames = c(sex = "Sex", 
+                                ethnicity = "Race", 
+                                college ="College Type"))
+lnames <- list(sex = c("Males", 
+                       "Females"),
+                 ethnicity = c("Black/African American", 
+                               "White/Caucasian", 
+                               "Asian",
+                               "Hispanic/Latino"),  
+                 college = c("LAC", 
+                             "PvtRU", 
+                             "PubRU"))
+
+mosaic(data = freshman_dataset_v4, ~ sex + ethnicity + college,
+       shade = TRUE, 
+       legend = TRUE, 
+       main = "The Effects of Race and Gender on College Decisions", 
+       zero_split = TRUE, 
+       spacing_args = list(start = 0.5, rate = 1.5),
+       labeling= labeling_border(rot_labels = c(0,0,0,0), 
+                                 just_labels = c("center", 
+                                                 "left", 
+                                                 "left", 
+                                                 "right"), 
+                                 labeling_args = vnames,
+                                 set_labels=lnames))
+```
+
+##### Visualization 1 Reasoning and Process
+In my first visualization I created a mosaic plot to see the effects of race and gender on college choice. The main reason why I chose to use a mosaic plot rather than other types of plots that only show 2 variables at once is due to both race and gender being related to college attendance decisions. I didn't have to do any type of data manipulation to alter this plot, I only had to install the vcd package. The most difficult part was trying to figure out how to use vcd, it is set up modularly, therefore we can use many R arguments to change aspects about it. However, many of the arguments that work in other visualizations do not work for the mosaic function.
+
+
+I am still unsure what my overall research question is, due to issues with finding advisors who are free. So, I may be switching back to analysis of education. A thought I had for possible analysis, is how does cultural or social capital of students affect their outcomes in higher education (I know this sounds like a big question, but it is just a starting point). If I try and continue in this general research direction, the basic mosaic plot I have made will help in helping me gather some interest into what matters more for students in determining their ability to pursue higher education, is it due more to race or gender relations in social networks? By creating a graphic even as basic as this helps see what effects optimism in their educational future are affected by different identity characteristics.
+
