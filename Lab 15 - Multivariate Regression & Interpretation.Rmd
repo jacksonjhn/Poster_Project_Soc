@@ -37,19 +37,34 @@ summary(model_2)
 
 model_3 <- lm(probfingraddeg ~ rwrdfrgrdslyr + factor(checkhwlyr), data = freshman_dataset_v4)
 summary(model_3)
+
+model_4 <- lm(probfingraddeg ~ factor(rwrdfrgrdslyr) + factor(checkhwlyr), data = freshman_dataset_v4)
+summary(model_4)
 ```
 
 
 e. Describe the results of the multivariate analysis, highlighting:
 * the apparent association between the control variable and the focal response variable
-* how the focal association changed when you incorporatedthe control variable
+* how the focal association changed when you incorporated the control variable
 * the implications of these results for your focal association
 
+
+I ran two seperate multivariate analyses in order to see what happens when you account for a factor of a categorical value. What I found was that the model where I factored the second explanatory variable resulted in more significant results. The relationship is significant to the 0.001 level with the factored control variable. The association overall decreased the significance of the rwrdfrgrdslyr's significance but the model gained anothe significant variable of checkhwlyr at the 5th level. These results imply that checkhwlyr belongs in our model. The third table was done out of curiosity just to see what would happen, however I need to consult my professor before reporting on it's validity.
+
+
 f. How well does this model fit the data? Is it an improvement over the bivariate model? Why or why not?
+
+
+The first and second model in this question both have better fit than in the bivariate case. The second model has a better fit than the first model with a fit of 0.01326 (and an adjusted R-squared of 0.0119!), even thought this is still a pretty weak fit it is an improvement. By adding more variables we may be able to further improve our multivariate regression.
+
 
 **2. Select any additional variables you want to incorporate into your final model. For each additional variable added to the model answer the following questions:**
 
 a. Describe the theoretical reasoning for selecting this variable.
+
+
+
+
 
 b. What type of relationship do you think this variable has with your focal variables? Given that, what do you expect to happen to your focal relationship when it is added to the model?
 
