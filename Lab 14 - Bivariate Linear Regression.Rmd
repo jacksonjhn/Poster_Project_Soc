@@ -20,7 +20,7 @@ The response variable I want to use is the respondents percieved probability of 
   
   
 ```{r, echo = FALSE, working= FALSE}
-model_0 <- lm(probfincol ~ pnshdeviancelyr, data = freshman_dataset_v4)
+model_0 <- lm(probfincol ~ rwrdfrgrdslyr, data = freshman_dataset_v4)
 summary(model_0)
 ```
   
@@ -28,25 +28,25 @@ summary(model_0)
   c. What is the direction, magnitude, and statistical significance of the bivariate association between the explanatory and response variables. 
   
   
-The direction of the relationship is positive, however the magnitude and significance of the bivariate association are both weak. The magnitude is only about 0.01 and the probability that it is due to chance is a p-value of 0.334.
+The direction of the relationship is positive, the magnitude is fairly small. However, the association is significant out to the 0 level.
   
   
   d. What is the meaning of the model intercept?
   
   
-The intercept represents the expected value of y when x is equal to zero. Therefore, when x is zero in this model the expected value of y is 9.75.
+The intercept represents the expected value of y when x is equal to zero. Therefore, when x is zero in this model the expected value of y is 9.66.
 
   
   e. How well does the bivariate model fit the data? How is this information calculated?
   
   
-The bivariate model in this situation does not fit the data well at all. The R-squared value  0.0002563 which essentially shows how poor of a fit this model is since it is near 0. The information about fit is calculated through the R-squared this is enough to where we don't even need to look at the adjusted R-squared to confirm how poor the fit is.
+The bivariate model in this situation does not fit the data well at all. The R-squared value  0.005117 which essentially shows how poor of a fit this model is since it is near 0. The information about fit is calculated through the R-squared this is enough to where we don't even need to look at the adjusted R-squared to confirm how poor the fit is. R-squared can be calculated by finding the sum of squared residuals and dividing that number by the total sum of squares, once this is done you can subtract that value from 1 and you should receive the R-squared value.
   
   
   f. Is the observed association between the independent variable and dependent variable consistent with your hypothesis? Why or why not?
   
   
-No it is not, I believed there would be a relationship between the two variables and instead the result shows no relationship among the two variables. We cannot reject the null hypothesis of the two variables not being related to one another.
+Yes the association is consistent with my hypothesis and we can reject the null hypothesis. Instead we can say both of the variables are related to one another. However, the fit of the model is of worry since it is so low essentially invalidating our rejection of the hypothesis.
   
   
 **2. Select a different focal relationship related to your project. This could be:**
@@ -59,11 +59,39 @@ No it is not, I believed there would be a relationship between the two variables
 
   a. Describe the response variable and the explanatory variable and the theoretical relationship you believe exists between these two variables. 
   
+  
+The response variable I am using for this question is similar to the one used in question 1 but it is the percieved probability of acquiring a graduate degree. My explanatory variable will be the same as the one in question 1. The believed relationship is that due to more rewards that come from schooling, respondents may pursue further education due to potential to futher the rewards they reap.  
+  
+  
   b. Conduct a simple (bivariate) linear regression on your focal relationship and save the model object. Print out the full results by calling `summary()` on your model object. 
+  
+  
+```{r, echo = FALSE, warning = FALSE}
+model_1 <- lm(probfingraddeg ~ rwrdfrgrdslyr, data = freshman_dataset_v4)
+summary(model_1)
+```
+  
+  
   c. What is the direction, magnitude, and statistical significance of the bivariate association between the explanatory and response variables. 
+  
+  
+The direction of the relationship is positive. The magnitude and stastical significance are both greater than the previous model in question 1. Just as in the first question the association of the model is significant at the 0 level but has a lower probability of being up to chance and a greater t value than the model used in question 1.
+  
   
   d. What is the meaning of the model intercept?
   
+  
+The model intercept is representive of what the estimated y would be if x is zero. In this question the estimated value of y when x is zero is 7.44733.
+
+  
   e. How well does the bivariate model fit the data? How is this information calculated?
   
+  
+This model has a similar issue as in question one where the R-squared is very low (0.008689), due to having a low R-squared it is hard to reject the null hypothesis. R-squared is calculated by dividing the sum of squared residuals by the total sum of squares and then subtracting the value you get from 1.
+  
+  
   f. Is the observed association between the independent variable and dependent variable consistent with your hypothesis? Why or why not?
+  
+
+The significance is relevant among the relationship I hypothesized but it is hard to reject the null. Our low R-squared values devaluates the significance of the results since our model fit is not even capable of explaining 1 percent of the variance we see in the model. Therefore, we cannot safely reject the null hypothesis.
+  
