@@ -1,0 +1,67 @@
+---
+title: "Lab 15 - Multivariate Regression & Interpretation"
+author: "Jackson Nahpi"
+date: "November 30, 2017"
+output:
+  pdf_document: default
+---
+
+Complete the following exercises below and include all code used to find the answers. Knit together the PDF document and commit both the Lab 15 RMD file and the PDF document to Git. Push the changes to GitHub so both documents are visible in your public GitHub repository.
+
+**1. Select a second explanatory variable from your dataset that you think has implications for the theoretical association of your focal relationship.**
+
+a. Describe the theoretical reasoning for selecting this variable.
+
+
+I am using the percieved probability of finishing a graduate education as my response variable, my first explanatory variable will be the level of rewards the respondent is given for grades, and my second explanatory variable will be the level of the respondent having their homework checked in their household. I believe that these are all good actions that can be done towards children to ensure them to pursue higher education by teaching good work ethic. Therefore, I think both explanatory variables will have a positive relationship with the response variable I have chosen.
+
+
+b. What type of relationship do you think this variable has with your focal variables? Given that, what do you expect to happen to your focal relationship when it is added to the model?
+
+
+I believe there will be positive relationships between the response variable and both of the explanatory variables. However, I think the original significance between my response variable and my first explanatory variable will be weakened by the addition of a new variable. 
+
+
+c. Is it a continuous or categorical variable? What implications does this have for a multivariate regression equation?
+
+
+The variable I am adding in is a categorical variable which means we have the potential of having simpsons paradox occur which means that the groups can act as a confounding variable. A confounding variable's effect can cause results given to be irrelevant if they are not handled well.
+
+
+d. Conduct a multivariate linear regression with this additional explanatory variable and save the model object. Print out the full results by calling `summary()` on your model object.
+
+
+```{r,echo = FALSE, warning = FALSE}
+model_2 <- lm(probfingraddeg ~ rwrdfrgrdslyr + checkhwlyr, data = freshman_dataset_v4)
+summary(model_2)
+
+model_3 <- lm(probfingraddeg ~ rwrdfrgrdslyr + factor(checkhwlyr), data = freshman_dataset_v4)
+summary(model_3)
+```
+
+
+e. Describe the results of the multivariate analysis, highlighting:
+* the apparent association between the control variable and the focal response variable
+* how the focal association changed when you incorporatedthe control variable
+* the implications of these results for your focal association
+
+f. How well does this model fit the data? Is it an improvement over the bivariate model? Why or why not?
+
+**2. Select any additional variables you want to incorporate into your final model. For each additional variable added to the model answer the following questions:**
+
+a. Describe the theoretical reasoning for selecting this variable.
+
+b. What type of relationship do you think this variable has with your focal variables? Given that, what do you expect to happen to your focal relationship when it is added to the model?
+
+c. Is it a continuous or categorical variable? What implications does this have for a multivariate regression equation?
+
+d. Conduct a multivariate linear regression by adding one explanatory variable at a time and save the model objects. Print out the full results by calling `summary()` on each model object.
+
+e. Describe the results of the multivariate analysis, highlighting:
+* the apparent association between each additional control variable and the focal response variable
+* how the focal association changed when you incorporated each control variable
+* the implications of these results for your focal association
+
+f. How well does the full (all explanatory variables included) model fit? Are any of the other models you ran a better fit? Explain how you came to the conclusion you did. 
+
+g. Select the model that you think best fits the data. Provide a brief synopsis of the analysis of your data using this model and describe the implications for the theoretical arguments you set out to test.
