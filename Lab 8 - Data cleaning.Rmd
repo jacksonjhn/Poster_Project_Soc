@@ -159,7 +159,11 @@ freshman_dataset_v4$scimusm6 <- NULL
 freshman_dataset_v4$artmusm13 <- NULL
 freshman_dataset_v4$scimusm13 <- NULL
 ```
+
+
 2. Preview the first and last 15 rows of your data. Is you dataset tidy? If not, what principles of tidy data does it seem to be violating?
+
+
 ```{r, echo = FALSE}
 head(freshman_dataset_v4, n = 15)
 tail(freshman_dataset_v4, n = 15)
@@ -179,10 +183,14 @@ hist(check_HW_senior,
      right = FALSE
      )
 ```
+
+
 The histogram shows us the distribution of how much students got their homework checked in their senior year by their parents
 
 
 4. Create at least one bivariate plot showing the relationship between two variables of interest. What does/do the(se) plot(s) tell you about the association between these two variables?
+
+
 ```{r, echo = FALSE}
 attach(freshman_dataset_v4)
 plot(checkhwlyr, probfincol1yr, main = "Bivariate plot",
@@ -190,6 +198,8 @@ plot(checkhwlyr, probfincol1yr, main = "Bivariate plot",
      pch = 19
      )
 ```
+
+
 It shows that students who had their homework checked very often tended to have a higher expected probability of finishing college.
 
 
@@ -209,9 +219,12 @@ I had to merge the artmusm and scimusm columns into one to represent total museu
 
 7. What is the class of each of the variables in your analysis? Are these classes appropriate for the type of measurement they purport to capture? Explain your reasoning. 
 
+
 ```{r, echo = FALSE}
 sapply(freshman_dataset_v4, class)
 ```
+
+
 All of my variables are classified as integer with the exception to college, which is classified as numeric
 
 
@@ -229,10 +242,12 @@ I removed all unnecessary values in the datasets corresponding to no responses, 
 
 10. Do you have any missing values in your dataset? How many and how are they coded? **Be sure to look out for specific codebook values for missing values (i.e. `-1` for `NA`) as well as empty strings or other software-specific values for `NA`.** Don't worry about removing NAs yet - we'll tackle this question later once discern whether they're random or systematically distributed. 
 
+
 I preemptively removed all of the NAs, don't knows, and no responses in the mutation above.
 
 
 11. Are there any special values in your dataset? If so, what are they and how do you think they got there? *The presence of special values is less likely if you haven't performed any data manipulation yet so you should remember to return to this step each time you carry out a mathematical transformation of any values in your dataset.*
+
 
 There are none.
 
@@ -243,6 +258,8 @@ There are none.
 ```{r, echo = FALSE}
 boxplot(freshman_dataset_v4t$probfingraddeg, horizontal = TRUE)
 ```
+
+
 There are a few outliers who specifically say they are highly unlikely to finish a graduate degree. I probably will not use very many boxplots for my research later though
 
 
