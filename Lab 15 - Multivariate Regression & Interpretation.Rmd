@@ -32,13 +32,19 @@ d. Conduct a multivariate linear regression with this additional explanatory var
 
 
 ```{r,echo = FALSE, warning = FALSE}
-model_2 <- lm(probfingraddeg ~ rwrdfrgrdslyr + checkhwlyr, data = freshman_dataset_v4)
+model_2 <- lm(probfingraddeg ~ rwrdfrgrdslyr + 
+                checkhwlyr, 
+              data = freshman_dataset_v4)
 summary(model_2)
 
-model_3 <- lm(probfingraddeg ~ rwrdfrgrdslyr + factor(checkhwlyr), data = freshman_dataset_v4)
+model_3 <- lm(probfingraddeg ~ rwrdfrgrdslyr + 
+                factor(checkhwlyr), 
+              data = freshman_dataset_v4)
 summary(model_3)
 
-model_4 <- lm(probfingraddeg ~ factor(rwrdfrgrdslyr) + factor(checkhwlyr), data = freshman_dataset_v4)
+model_4 <- lm(probfingraddeg ~ factor(rwrdfrgrdslyr) + 
+                factor(checkhwlyr), 
+              data = freshman_dataset_v4)
 summary(model_4)
 ```
 
@@ -63,14 +69,53 @@ The first and second model in this question both have better fit than in the biv
 a. Describe the theoretical reasoning for selecting this variable.
 
 
-
+I want to add in 4 new variables. First is percieved level of punishment for bad grades (pnshfrgrdslyr) towards the respondent in their last year of secondary school. I feel this variable is significant and different than rewards for grades. Punishment can be used as a deterent to bad grades and the reward the respondent would recieve is not being punishment. Even though using punishment for bad grades as a deterent is a cruel method of teaching children good work ethic, it might be useful in seeing whether it has any effect of percieved possibility of achieving a graduates degree. I have a feeling this will show a positive relationship. The second variable I want to include is the percieved level of punishment for disobediance (pnshdeviancelyr) in the last year of their secondary education. I believe a positive relationship will be present since punishment for disobediance may cause respondents to behave better in school from a perspective of not wanting to have bad feedback given to their parents from teachers. My fourth variable is sex (sex), I do not know what relationship to expect I mainly want to see if it is significant in any way. Lastly, I want to include ethnicity (ethnicity) into the model. This study was primarily focused on seeing why their was a lack of diversity in higher education, so it would be interesting to see whether it does have a significant effect in the percieved possibility of achieving a graduate degree.
 
 
 b. What type of relationship do you think this variable has with your focal variables? Given that, what do you expect to happen to your focal relationship when it is added to the model?
 
+
+I believe the type of relationships will occur with the following variables: pnshfrgrdslyr will be positive, pnshdeviancelyr will be positive, sex I do not have any intuition as to which way it will go but I am certain it will be significant, and last is ethnicity which I think will be positively associated with white (when ethnicity=2). I think the relationship between the focal variables will decrease but the model will increase in fit.
+
+
 c. Is it a continuous or categorical variable? What implications does this have for a multivariate regression equation?
 
+
+All of these variables are categorical but we can account for this by factoring them which allows us to see what specific levels are actually significant to the model. By doing this we also rule out potential confounding variables.
+
+
 d. Conduct a multivariate linear regression by adding one explanatory variable at a time and save the model objects. Print out the full results by calling `summary()` on each model object.
+
+
+```{r,echo = FALSE, warning = FALSE}
+model_5 <- lm(probfingraddeg ~ rwrdfrgrdslyr + 
+                factor(checkhwlyr) + 
+                factor(pnshfrgrdslyr) +
+                factor(pnshdeviancelyr) +
+                factor(sex) +
+                factor(ethnicity), 
+              data = freshman_dataset_v4)
+summary(model_5)
+
+model_6 <- lm(probfingraddeg ~ rwrdfrgrdslyr + 
+                factor(checkhwlyr) + 
+                factor(pnshfrgrdslyr) +
+                factor(sex) +
+                factor(ethnicity), 
+              data = freshman_dataset_v4)
+summary(model_6)
+
+model_7 <- lm(probfingraddeg ~ rwrdfrgrdslyr + 
+                factor(checkhwlyr) + 
+                factor(pnshfrgrdslyr) +
+                factor(pnshdeviancelyr) +
+                factor(sex) +
+                factor(ethnicity) +
+                factor(musmlyr), 
+              data = freshman_dataset_v4)
+summary(model_7)
+```
+
 
 e. Describe the results of the multivariate analysis, highlighting:
 * the apparent association between each additional control variable and the focal response variable
