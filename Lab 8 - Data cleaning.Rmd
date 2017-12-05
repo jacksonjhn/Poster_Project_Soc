@@ -71,7 +71,7 @@ freshman_dataset <- freshman_dataset %>%
   filter(educprogramlyr != 97 & educprogramlyr != 98) %>%
   mutate(educprogramlyr = ifelse(test = educprogramlyr >= 1, 
                              yes = 1, 
-                             no = 0))
+                             no = 5))
 
 freshman_dataset <- transform(freshman_dataset,
                               caseid = as.numeric(caseid),
