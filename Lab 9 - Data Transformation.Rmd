@@ -13,17 +13,28 @@ Using your own dataset (which may include more than one table) carry out the fol
 1. In addition to simply naming variable names in select you can also use `:` to select a range of variables and `-` to exclude some variables, similar to indexing a `data.frame` with square brackets. You can use both variable's names as well as integer indexes.
 
   a. Use `select()` to print out a tbl that contains only the  first 3 columns of your dataset, called by name.
+
+
 ```{r, echo = FALSE}
 dplyr::select(freshman_dataset_v4, caseid:sex)
 ``` 
+
+
   b. Print out a `tbl` with the last 3 columns of your dataset, called by name.
+
+
 ```{r, echo = FALSE}
 dplyr::select(freshman_dataset_v4, probfincol:probfingraddeg)
 ```
+
+
   c. Find the most concise way to select the first 3 columns and the last 3 columns by name. 
+
+
 ```{r, echo = FALSE}
 dplyr::select(freshman_dataset_v4, caseid:sex, probfincol:probfingraddeg)
 ```
+
 
 2. `dplyr` comes with a set of helper functions that can help you select groups of variables inside a `select()` call:
 - `starts_with("X")`: every name that starts with "X",
@@ -36,12 +47,18 @@ dplyr::select(freshman_dataset_v4, caseid:sex, probfincol:probfingraddeg)
 Pay attention here: When you refer to columns directly inside `select()`, you don't use quotes. If you use the helper functions, you do use quotes.
 
   a. Use `select()` and a helper function to print out a `tbl` that selects only variables that contain a specific character string.
+
+
 ```{r, echo = FALSE}
 dplyr::select(freshman_dataset_v4, 
        contains("m")
        )
 ```
+
+
   b. Use `select()` and a helper function to print out a `tbl` that selects only variables that start with a certain letter or string of letters.
+
+
 ```{r, echo = FALSE}
 dplyr::select(freshman_dataset_v4,
        starts_with("prnt")
@@ -58,6 +75,8 @@ I want to create two new variables that just represent museum visits at ages 6 a
 5. You can use mutate() to add multiple variables at once. To create more than one variable, place a comma between each variable that you define inside `mutate()`.
   
   a. Carry out any and all of the mutations you wish to perform on your dataset and print the results to the console.
+
+
 ```{r, echo = FALSE}
 freshman_dataset_v3 <- mutate(freshman_dataset_v2,
                            musm6 = round((freshman_dataset_v2$artmusm6 + 
@@ -67,6 +86,8 @@ freshman_dataset_v4 <- mutate(freshman_dataset_v3,
                            musm13 = round((freshman_dataset_v3$artmusm13 + 
                                              freshman_dataset_v3$scimusm13)/2, 0))
 ```
+
+
   I used both of these mutations to create singular variables that represent museum visits by combining art and science museum visits.
   
   
@@ -86,6 +107,8 @@ freshman_dataset_v4 <- mutate(freshman_dataset_v3,
   
   
   b. Use at least two of the logical operators presented above to print these subsets of your data.
+
+
 ```{r, eval = FALSE}
 print(sex_vector <- ifelse(freshman_fall$sex == "M", 0, 1))
 
@@ -98,12 +121,15 @@ print(freshman_dataset <- freshman_dataset %>%
                              no = 5)))
 ```
 
-I chose the sex of the respondents separate from the other variables since I needed to recode sex from a character to a numeric. I also selected race and recoded it from a character to a numeric. Lastly, I recoded educprogramlyr from a continuous variable to a binary variable.
+
+I chose the sex of the respondents separate from the other variables since I needed to recode sex from a character to a numeric. I also selected race and recoded it from a character to a numeric. Lastly, I recoded educprogramlyr from a continuous variable to a binary variable that has a yes value equal to 1 and a no value equal to 5, this is to match the other educprogram in the dataset.
     
      
 7. `R` also comes with a set of boolean operators that you can use to combine multiple logical tests into a single test. These include `&` (and), `|` (or), and `!` (not). Instead of using the `&` operator, you can also pass several logical tests to `filter()`, separated by commas. `is.na()` will also come in handy.   
 
   a. Use `R`'s logical and boolean operators to select just the rows in your data that meet a specific boolean condition. 
+
+
 ```{r, eval = FALSE}
 freshman_dataset_v2 <- filter(freshman_dataset, 
                              checkhw6 < 6 & 
@@ -133,14 +159,20 @@ freshman_dataset_v2 <- filter(freshman_dataset,
                              probfingraddeg < 97
                              )
 ```
+
+
 I used this line of code in the previous lab to remove all the observation that contained values that were seen as missing or didn't know. 
 
  
   b. Print out all of the observations in your data in which none of variables are `NA`.
+
+
 ```{r, eval = FALSE}
 freshman_dataset <- na.omit(freshman_dataset)
 print(freshman_dataset)
 ```
+
+
 In lab 8 I already used code to remove all NA's from the dataset using the command above.
 
 
@@ -176,6 +208,8 @@ By default, `arrange()` arranges the rows from smallest to largest. Rows with th
   
   
   b. Print out at least three summary statistics using `summarise()`. 
+
+
 ```{r, echo = FALSE}
 dplyr::summarise(freshman_dataset_v4,
           sd = sd(freshman_dataset_v4$checkhw6),
@@ -196,6 +230,7 @@ dplyr::summarise(freshman_dataset_v4,
           )
 ```
 
+
 10. `dplyr` provides several helpful aggregate functions of its own, in addition to the ones that are already defined in `R`. These include:
 - `first(x)` - The first element of vector `x`.
 - `last(x)` - The last element of vector `x`.
@@ -206,6 +241,8 @@ dplyr::summarise(freshman_dataset_v4,
 Next to these `dplyr`-specific functions, you can also turn a logical test into an aggregating function with `sum()` or `mean()`. A logical test returns a vector of TRUE's and FALSE's. When you apply `sum()` or `mean()` to such a vector, `R` coerces each `TRUE` to a `1` and each `FALSE` to a `0`. `sum()` then represents the total number of observations that passed the test; `mean()` represents the proportion.
 
   a. Print out a summary of your data using at least two of these `dplyr`-specific aggregate functions. 
+
+
 ```{r, echo = FALSE}  
 sex_vector <- ifelse(freshman_fall$sex == "M", 0, 1)
 race_vector <- dplyr::recode(freshman_fall$w1qzeth, "B"=1,"W"=2,"A"=3,"H"=4)
@@ -213,6 +250,8 @@ race_vector <- dplyr::recode(freshman_fall$w1qzeth, "B"=1,"W"=2,"A"=3,"H"=4)
 print(sex_vector)
 print(race_vector)
 ```
+
+
   b. Why did you choose the ones you did? What did you learn about your data from these summaries?
   
   
@@ -230,6 +269,8 @@ has the output
 As with `arrange()`, `rank()` ranks values from the smallest to the largest.
 
   a. Using the `%>%` operator, first group your dataset by a meaningful variable, then perform a mutation that you're interested in. 
+
+
 ```{r, echo = FALSE}
 freshman_dataset <- freshman_fall %>% 
   dplyr::select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
@@ -375,6 +416,8 @@ freshman_dataset_v4$scimusm6 <- NULL
 freshman_dataset_v4$artmusm13 <- NULL
 freshman_dataset_v4$scimusm13 <- NULL
 ```
+
+
   b. What do the results tell you about different groups in you data?
 
 
