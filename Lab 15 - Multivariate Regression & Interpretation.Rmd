@@ -115,14 +115,26 @@ model_7 <- lm(probfingraddeg ~ rwrdfrgrdslyr +
               data = freshman_dataset_v4)
 summary(model_7)
 
-model_8 <- lm(probfingraddeg ~ rwrdfrgrdslyr + 
+model_8 <- lm(probfingraddeg ~ factor(rwrdfrgrdslyr) + 
                 factor(checkhwlyr) + 
                 factor(pnshdeviancelyr) +
                 factor(sex) +
                 factor(ethnicity) +
-                factor(musmlyr), 
+                factor(musmlyr) +
+                factor(college),
               data = freshman_dataset_v4)
 summary(model_8)
+
+model_9 <- lm(probfingraddeg ~ factor(rwrdfrgrdslyr) + 
+                factor(checkhwlyr) + 
+                factor(pnshdeviancelyr) +
+                factor(sex) +
+                factor(ethnicity) +
+                factor(musmlyr) +
+                factor(college) +
+                probextraeduc,
+              data = freshman_dataset_v4)
+summary(model_9)
 ```
 
 
@@ -138,13 +150,35 @@ I conducted multiple regressions in the first I saw that the pnshfrgrdslyr was i
 Out of curiosity I added another variable into the third regression but used the first model I had for this question. I added the variable frequency of museum visits in the last year of secondary school that the adults of your household took you to. To my surprise it came out as a more significant model and even had multiple significant values. So in the final model I removed pnshdeviancelyr from the model and got a better model than the previous one since the adjusted R-squared is higher.
 
 
-Overall I think the final model for this question gives the best model we can get with the dataset I have created. In this ending model
+Overall I think the final model for this question gives the best model we can get with the dataset I have created. In this ending model, almost every variable is significant to a minimum of the 5% level. The only variable included that has no statistical significance is the college selection, I kept college in simply to control for the variable. I also made sure to factor for each of the variables in my model since almost all of my data is categorical, with the exception of my dependent variable. In these following paragraphs I'll talk about the factored variables, however I will discuss the variables sex and ethnicity last. 
+
+
+The first independent variable (rwrdfrgrdslyr) has a positive association with the dependent variable, the only significant factor form from the regression is 5th level which is significant to the 0 level. The theoretical argument that can come from this finding is that high levels of rewards for grades in school may inspire higher pursuits in education.
+
+
+The second independent variable (checkhwlyr) has a positive association with the dependent variable at the 0.01 level. The significant factored level is the 5th level. Implications for the result recieved is that individuals who's parents check their homework frequently causes their children to have higher educational pursuits.
+
+
+The third independent variable (pnshdeviancelyr) has a negative association with the dependent variable at the 0.05 level. The only factored version that has significance is at the third level of the factored variable. Implications for research from this result can be that parents who sometimes punish deviant behaviour tend to lower the educational pursuits of their child.
+
+
+The next independent variable (musmlyr) has a positive association with the dependent variable at multiple factored levels. Its is significant at the 3 and 5 level at a 0 level significance; the 4th level of the variable is significant at the 0.05 level. Implications these results have to research is that childrens parents who bring their child to a museum (at the minimum) sometimes will have children who believe they can pursue higher levels of education.
+
+
+The independent variable sex is significantly associated with the dependent variable. My only issue is since I factored the variable I got only an output for females and not males. For females they have a positive association with wanting to pursue high levels of education and it is significant at the 0 level. My only worry about using this variable is that I can't compare to what males statistics are so I may change the final model to an unfactored version of this variable.
+
+
+The last independent variable for this model is ethnicity. The variable is negatively associated with our dependent variable, and is significant negative associations (at the 0 level) for individuals who are white and hispanic. Implications for this would be that maybe students who are white or hispanic have lower views of their educationahl pursuit capabilities. However, this factored version doesn't include african americans. Also, I would change the format of the variable in my recording by trying to create a binary version that way it would be easier to see if a certain race variable would be associated with our dependent variable.
 
 
 f. How well does the full (all explanatory variables included) model fit? Are any of the other models you ran a better fit? Explain how you came to the conclusion you did. 
 
 
-
+The model fits not as well as one would like but with an adjusted R-squared near 5 percent with the variables that I am using is pretty good. I believe the regressions I am working with are more along the lines of exploratory models in order to help give me some ideas as to what I should pursue for my research question. This model gives the best fit out of all the models I ran and gave the most significant variables.
 
 
 g. Select the model that you think best fits the data. Provide a brief synopsis of the analysis of your data using this model and describe the implications for the theoretical arguments you set out to test.
+
+
+The answer to this question is in question E. above. Also as a side note, the final model produced above is a test to see what adding the students' percieved chance of completing extra education after colleg and seeing if it influences their percieved chance of completing a graduate degree. However, I do not feel this model is valid since many individuals at that age may not know the difference between those two levels of educaiton.
+
