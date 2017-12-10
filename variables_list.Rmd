@@ -9,7 +9,176 @@ output: html_document
 library(foreign)
 library(haven)
 library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(memisc)
+library(purrr)
+library(ggthemes)
+library(knitr)
+library(gmodels)
+library(GGally)
+library(broom)
+library(vcd)
+library(ggtern)
+library(stargazer)
 ```
+
+
+Change names on the independent variables.
+Second line removes title
+Third line changes the column names
+Fourth, alters and seperates columns
+```{r}
+covariate.labels = c("","","")
+
+dep.var.labels.include = FALSE
+
+column.labels = c("Good", "Better")
+
+column.separate = c(2, 2)
+```
+
+
+Code to Generate the Model Table in Latex format use quick latex to render
+```{r, echo = FALSE, warning = FALSE}
+stargazer(model_8, 
+          model_9, 
+          model_10, 
+          type = 'text', 
+          style = "qje", 
+          title = "What is Significant To Optimism in Graduate Degree Attainment", 
+          digits = 3, 
+          out = "table.txt", 
+          summary = TRUE, 
+          single.row = TRUE,
+          covariate.labels = c("Rewarded For Grades(2)",
+                               "(3)",
+                               "(4)",
+                               "(5)",
+                               "Homework Gets Checked(2)",
+                               "(3)",
+                               "(4)",
+                               "(5)",
+                               "Disobedience Punishment(2)",
+                               "(3)",
+                               "(4)",
+                               "(5)",
+                               "Sex",
+                               "Ethnicity(2)",
+                               "(3)",
+                               "(4)",
+                               "Museum Visits(2)",
+                               "(3)",
+                               "(4)",
+                               "(5)",
+                               "College Choice(2)",
+                               "(3)",
+                               "Chance Of Attaining Extra Education",
+                               "Chance Of Finishing College"),
+          column.labels = c("Model 1",
+                            "Model 2",
+                            "Model 3"),
+          dep.var.labels = c("Chance of Attaining a Graduate Degree"))
+```
+
+```{r mylatextable, results = "asis"}
+stargazer(model_10, type = 'latex')
+
+```
+
+
+```{r}
+freshman_dataset4$ethnicity <- mapvalues(freshman_dataset_4$ethnicity,
+c('1', '2'),
+c("black","white"))
+```
+
+```{r,echo = FALSE, warning = FALSE}
+mosaic(data = freshman_dataset_v4,
+       ~ sex + college+ ethnicity,
+       shade = TRUE, 
+       legend = TRUE,
+       main = "Effects of Race and Gender on College Decisions", 
+       zero_split = TRUE, 
+       spacing_args = list(start = 0.5, 
+                           rate = 1.5),
+       labeling= labeling_border(rot_labels = c(0,
+                                                0,
+                                                0,
+                                                0),
+                                 rot_varnames = c(0,
+                                                  0,
+                                                  0,
+                                                  0),
+                                 just_labels = c("center", 
+                                                 "left", 
+                                                 "left", 
+                                                 "right"), 
+                                 set_varnames = list(sex = "Gender", 
+                                                     ethnicity = "Race",
+                                                     college = "College Choice"),
+                                 set_labels = lnames,
+                                 offset_varnames = c(0.5,
+                                                     3,
+                                                     0,
+                                                     2.25)),
+       spacing = spacing_dimequal(c(0.5,
+                                    0.15,
+                                    0.15)),
+       margins = c(left = 7, 
+                   top = 3.5, 
+                   right = 7), 
+       gp_args = list(interpolate = 1:4))
+```
+
+
+#Possible Addons
+```{r}
+direction = c("v","h","v")
+#Adjusts the location of where different variables are placed in the mosaic plot
+sub = "Male"
+#Adds a title wherever the location specified
+
+split_vertical = c(TRUE, FALSE, TRUE)
+#alters how the mosaic is shown by rotating the matrix
+
+
+mosaic(~ college + ethnicity | sex, data = mosaic_subset, split_vertical = c(TRUE, TRUE, FALSE), legend = TRUE)
+#WHY
+```
+
+
+
+```{r}
+mosaic_table <- table(mosaic_subset)
+mosaicplot(table(mosaic_table), color = 1:3, las = 1, main = "test", xlab="whatevs", ylab="else")
+mtext(side = 1, "Category1", line = 0.5, col="green")
+mtext(side = 1, "Category1", line = 1, col="blue")
+mtext(side = 1, "Category1", line = 2, col="red")
+mtext(side = 2, "Category2", line = -1, col="purple")
+```
+
+#How to knit code
+```{r}
+rmarkdown::render('Lab 8 - Data cleaning.rmd', output_format = 'pdf_document')
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#How to conduct multiple regression with interaction terms
+```{r}
+model_8 <- lm(probfingraddeg ~ factor(rwrdfrgrdslyr) + 
+                factor(checkhwlyr) + 
+                factor(pnshdeviancelyr) +
+                factor(sex) +
+                factor(ethnicity) +
+                factor(musmlyr) +
+                factor(college) +
+              factor(sex):probfincol,
+              data = freshman_dataset_v4)
+summary(model_8)
+```
+
 #data sets
 ```{R}
 freshman_fall<-read.dta("nlsfw1p.dta/nlsfw1p.dta")
@@ -17,4 +186,362 @@ freshman_spring<-read.dta("nlsfw2p.dta/nlsfw2p.dta")
 sophomore_spring<-read.dta("nlsfw3p.dta/nlsfw3p.dta")
 junior<-read.dta("nlsfw4p.dta/nlsfw4p.dta")
 senior<-read.dta("nlsfw5p.dta/nlsfw5p.dta")
+```
+
+Experimental
+```{r}
+test_freshman_dataset <- freshman_fall %>% 
+  dplyr::select(caseid, college, parnt6, parnt13, parntlyr, w1q8b, w1q8e, w1q8f, w1q8g, w1q8j, w1q8k, w1q10c, w1q22a, w1q22e, w1q22f, w1q22g, w1q22m, w1q22n, w1q25c, w1q38a, w1q38e, w1q38f, w1q38g, w1q38m, w1q87b, w1q90, w1q91a, w1q91b, w1q91c, w1q91d, w1q91e)
+
+test_sex_vector <- ifelse(freshman_fall$sex == "M", 0, 1)
+
+test_sex_vector <- data.frame(test_sex_vector)
+
+race_vector <- dplyr::recode(freshman_fall$w1qzeth, "B"=1,"W"=2,"A"=3,"H"=4)
+
+race_vector <- data.frame(race_vector)
+
+sex_and_ethnicity_vector <- bind_cols(test_sex_vector, race_vector)
+
+test_freshman_dataset <- bind_cols(sex_and_ethnicity_vector, test_freshman_dataset)
+
+test_freshman_dataset <- na.omit(test_freshman_dataset)
+
+names(test_freshman_dataset) <- c("sex",
+          "ethnicity",
+          "caseid",
+          "college",
+          "prntsat6", 
+          "prntsat13", 
+          "prntsatlyr", 
+          "checkhw6", 
+          "rwrdfrgrds6", 
+          "pnshfrgrds6", 
+          "pnshdeviance6", 
+          "artmusm6", 
+          "scimusm6", 
+          "educprogram6",
+          "checkhw13", 
+          "rwrdfrgrds13", 
+          "pnshfrgrds13", 
+          "pnshdeviance13", 
+          "artmusm13", 
+          "scimusm13", 
+          "educprogram13",
+          "checkhwlyr", 
+          "rwrdfrgrdslyr", 
+          "pnshfrgrdslyr", 
+          "pnshdeviancelyr", 
+          "musmlyr", 
+          "educprogramlyr", 
+          "currntcolaspir", 
+          "probfincol1yr",
+          "probfincol2yr",
+          "probfincol",
+          "probextraeduc",
+          "probfingraddeg"
+         )
+
+test_freshman_dataset <- test_freshman_dataset %>%
+  filter(educprogramlyr != 97 & educprogramlyr != 98) %>%
+  mutate(educprogramlyr = ifelse(test = educprogramlyr >= 1, 
+                             yes = 1, 
+                             no = 0))
+
+test_freshman_dataset <- transform(test_freshman_dataset,
+                              caseid = as.numeric(caseid),
+                              prntsat6 = as.numeric(prntsat6),
+                              prntsat13 = as.numeric(prntsat13),
+                              prntsatlyr = as.numeric(prntsatlyr)
+                              )
+
+test_freshman_dataset <- transform(test_freshman_dataset,
+                              checkhw6 = as.numeric(checkhw6),
+                              rwrdfrgrds6 = as.numeric(rwrdfrgrds6),
+                              pnshfrgrds6 = as.numeric(pnshfrgrds6),
+                              pnshdeviance6 = as.numeric(pnshdeviance6),
+                              artmusm6 = as.numeric(artmusm6), 
+                              scimusm6 = as.numeric(scimusm6),
+                              educprogram6 = as.numeric(educprogram6)
+                              )
+
+test_freshman_dataset <- transform(test_freshman_dataset,
+                              checkhw13 = as.numeric(checkhw13),
+                              rwrdfrgrds13 = as.numeric(rwrdfrgrds13),
+                              pnshfrgrds13 = as.numeric(pnshfrgrds13),
+                              pnshdeviance13 = as.numeric(pnshdeviance13),
+                              artmusm13 = as.numeric(artmusm13),
+                              scimusm13 = as.numeric(scimusm13),
+                              educprogram13 = as.numeric(educprogram13)
+                              )
+                              
+test_freshman_dataset <- transform(test_freshman_dataset,
+                              checkhwlyr = as.numeric(checkhwlyr),
+                              rwrdfrgrdslyr = as.numeric(rwrdfrgrdslyr),
+                              pnshfrgrdslyr = as.numeric(pnshfrgrdslyr),
+                              pnshdeviancelyr = as.numeric(pnshdeviancelyr),
+                              musmlyr = as.numeric(musmlyr),
+                              educprogramlyr = as.numeric(educprogramlyr)
+                              )
+
+test_freshman_dataset <- transform(test_freshman_dataset,
+                              currntcolaspir = as.numeric(currntcolaspir),
+                              probfincol1yr = as.numeric(probfincol1yr),
+                              probfincol2yr = as.numeric(probfincol2yr),
+                              probfincol = as.numeric(probfincol),
+                              probextraeduc = as.numeric(probextraeduc),
+                              probfingraddeg = as.numeric(probfingraddeg)
+                              )
+
+
+test_freshman_dataset <- filter(test_freshman_dataset, 
+                           checkhw6 < 6 & 
+                             rwrdfrgrds6 < 6 &
+                             pnshfrgrds6 < 6 &
+                             pnshdeviance6 < 6 &
+                             artmusm6 < 6 &
+                             scimusm6 < 6 &
+                             educprogram6 < 6 &
+                             checkhw13 < 6 &
+                             rwrdfrgrds13 < 6 &
+                             pnshfrgrds13 < 6 &
+                             pnshdeviance13 < 6 & 
+                             artmusm13 < 6 &  
+                             scimusm13 < 6 &  
+                             educprogram13 < 6 &
+                             checkhwlyr < 6 & 
+                             rwrdfrgrdslyr < 6 & 
+                             pnshfrgrdslyr < 6 &  
+                             pnshdeviancelyr < 6 & 
+                             musmlyr < 6 & 
+                             probfincol1yr < 97 &
+                             probfincol2yr < 97 & 
+                             probfincol < 97 & 
+                             probextraeduc < 97 & 
+                             probfingraddeg < 97
+                             )
+
+test_freshman_dataset <- mutate(test_freshman_dataset,
+                           musm6 = round((test_freshman_dataset$artmusm6 + 
+                                            test_freshman_dataset$scimusm6)/2, 0))
+  
+test_freshman_dataset <- mutate(test_freshman_dataset, 
+                           musm13 = round((test_freshman_dataset$artmusm13 + 
+                                             test_freshman_dataset$scimusm13)/2, 0))
+
+test_freshman_dataset$artmusm6 <- NULL
+test_freshman_dataset$scimusm6 <- NULL
+test_freshman_dataset$artmusm13 <- NULL
+test_freshman_dataset$scimusm13 <- NULL
+```
+
+```{r}
+freshman_dataset_codebook <- within(freshman_dataset_v4, {
+  description(sex) <- "Sex of respondent"
+  
+  description(ethnicity) <- "Respondent's ethnicity"
+  
+  description(caseid) <- "Case id number of respondent"
+  
+  description(college) <- "Type of college attended"
+  
+  description(prntsat6) <- "Parents in respondent's household at age 6"
+  
+  description(prntsat13) <- "Parents in respondent's household at age 13 "
+  
+  description(prntsatlyr) <- "Parents in the household at respondent's last year before college"
+  
+  description(checkhw6) <- "How often did adults in your household check if you had done your homework at age 6"
+  
+  description(rwrdfrgrds6) <- "How often did adults in your household reward you for good grades at age 6"
+  
+  description(pnshfrgrds6) <- "How often did adults in your household punish you for bad grades at age 6"
+  
+  description(pnshdeviance6) <- "How often did adults in your household punish you for disobediance at age 6"
+  
+  description(educprogram6) <- "Did you participate in an educational day camp in the summer of your 6th birthday"
+  
+  description(checkhw13) <- "How often did adults in your household check if you had done your homework at age 13"
+  
+  description(rwrdfrgrds13) <- "How often did adults in your household reward you for good grades at age 13"
+  
+  description(pnshfrgrds13) <- "How often did adults in your household punish you for bad grades at age 13" 
+  
+  description(pnshdeviance13) <- "How often did adults in your household punish you for disobediance at age 13"
+  
+  description(educprogram13) <- "Did you participate in an educational day camp in the summer of your 13th birthday"
+  
+  description(checkhwlyr) <- "How often did adults in your household check if you had done your homework in your last year before college"
+  
+  description(rwrdfrgrdslyr) <- "How often did adults in your household reward you for good grades in your last year before college"
+  
+  description(pnshfrgrdslyr) <- "How often did adults in your household punish you for bad grades in your last year before college"
+  
+  description(pnshdeviancelyr) <- "How often did adults in your household punish you for disobediance in your last year of college"
+  
+  description(musmlyr) <- "How often did adults take you to museums in your last year before college"
+  
+  description(educprogramlyr) <- "During the past summer how many weeks did you spend at a Pre-college program"
+  
+  description(currntcolaspir) <- "Respondent's current college aspirations"
+  
+  description(probfincol1yr) <- "Respondent's estimation of completing 1 year of college"
+  
+  description(probfincol2yr) <- "Respondent's estimation of completing 2 years of college"
+  
+  description(probfincol) <- "Respondent's estimation of completing college"
+  
+  description(probextraeduc) <- "Respondent's estimation of completing extra education after college"
+  
+  description(probfingraddeg) <- "Respondent's estimation of completing a graduate or professional degree"
+  
+  description(musm6) <- "How often did adults in your household take you to museums at age 6"
+  
+  description(musm13) <- "How often did adults in your household take you to museums at age 13"
+  
+  
+    wording(sex) <- "Sex of Respondent taken at Wave 1"
+    wording(ethnicity) <- "Respondent’s Ethnicity at Wave 1"
+    wording(caseid) <- "Unique identifier for the respondent"
+    wording(college) <- "Type of college respondent is attending"
+    wording(checkhw6) <- "Still Thinking About When You Were Six Years Old, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Check If You’d Done Your Homework?"
+    wording(checkhw13) <- "Still Thinking About When You Were Thirteen Years Old, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Check If You’d Done Your Homework?"
+    wording(checkhwlyr) <- "Last Year, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Check If You’d Done Your Homework?"
+  
+    wording(rwrdfrgrds6) <- "Still Thinking About When You Were Six Years Old, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Reward You For Good Grades?"
+    wording(rwrdfrgrds13) <- "Still Thinking About When You Were Thirteen Years Old, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Reward You For Good Grades?"
+    wording(rwrdfrgrdslyr) <- "Last Year, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Reward You For Good Grades?"
+  
+    wording(pnshfrgrds6) <- "Still Thinking About When You Were Six Years Old, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Punish You For Bad Grades?"
+    wording(pnshfrgrds13) <- "Still Thinking About When You Were Thirteen Years Old, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Punish You For Bad Grades?"
+    wording(pnshfrgrdslyr) <- "Last Year, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Punish You For Bad Grades?"
+
+    wording(pnshdeviance6) <- "Still Thinking About When You Were Six Years Old, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Punish You For Disobedience?"
+    wording(pnshdeviance13) <- "Still Thinking About When You Were Thirteen Years Old, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Punish You For Disobedience?"
+    wording(pnshdeviancelyr) <- "Last Year, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Punish You For Disobedience?"
+  
+    wording(musm6) <- "Still Thinking About When You Were Six Years Old, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Take you to museums?"
+    wording(musm13) <- "Still Thinking About When You Were Thirteen Years Old, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Take you to museums?"
+    wording(musmlyr) <- "Last Year, How Often Did Your Parents, Older Siblings, Or Other Adults In Your Household Take you to museums?"
+
+  
+  foreach(x=c(prntsat6, prntsat13, prntsatlyr, {
+    wording(x) <- "Parents in the Household"
+  }))
+  
+  foreach(x=c(probfincol1yr, probfincol2yr, probfincol, probextraeduc, probfingraddeg, {
+    wording(x) <- "Please Estimate The Probability That You Will Complete Each Of The Following Educational Milestones.  That Is, On A Scale From 0 To 10, Where 0 Means It’s Extremely Unlikely And 10 Means It Is Extremely Likely, What Is The Likelihood That You Will Finish ______?  Feel Free To Use Any Number Between 0 And 10"
+  }))
+  
+    wording(educprogram6) <- "During the summer after your 6th birthday, did you participate in an Educational Day camp?"
+    wording(educprogram13) <- "During the summer after your 13th birthday, did you participate in an Educational Day camp?"
+    wording(educprogramlyr) <- "This Last Summer, did you participate in an Educational Program?"
+  
+  wording(currntcolaspir) <- "Which Of The Following Three Statements Best Describes Your Current Aspirations?"
+  
+ 
+ labels(caseid) <- c("Case ID number")
+ 
+ labels(sex) <- c(
+   "Male" = 0,
+   "Female" = 1
+ )
+ 
+ labels(ethnicity) <- c(
+   "Black/African American"       = 1,
+   "Caucasian/White"              = 2,
+   "Asian"                        = 3,
+   "Hispanic or Latino"           = 4
+ )
+ 
+ labels(college) <- c(
+   "Liberal Arts College"         = 1,
+   "Private Research University"  = 2,
+   "Public Research University"   = 3
+ )
+ 
+ foreach(x=c(prntsat6,
+             prntsat13,
+             prntsatlyr), {
+               labels(x) <- c(
+   "Mother only"                  = 1,
+   "Father only"                  = 2,
+   "Both mother and father"       = 3,
+   "Niether mother nor father"    = 4 
+ )})
+ 
+ foreach(x=c(checkhw6, 
+          rwrdfrgrds6, 
+          pnshfrgrds6, 
+          pnshdeviance6, 
+          musm6,
+          checkhw13, 
+          rwrdfrgrds13, 
+          pnshfrgrds13, 
+          pnshdeviance13, 
+          musm13, 
+          checkhwlyr, 
+          rwrdfrgrdslyr, 
+          pnshfrgrdslyr, 
+          pnshdeviancelyr, 
+          musmlyr), { 
+         labels(x) <- c(
+   "Never"                        = 1,
+   "Rarely"                       = 2,
+   "Sometimes"                    = 3,
+   "Often"                        = 4,
+   "Very Often"                   = 5
+ )})
+ 
+ foreach(x=c(educprogram6,
+             educprogram13,
+             educprogramlyr), {
+         labels(x) <- c(
+   "Yes"                          = 1,
+   "No"                           = 5
+ )})
+ 
+ labels(currntcolaspir) <- c(
+   "I Plan To Take College One Year At  Time And  See How I Do"             = 1,  
+   "I Plan To Graduate From College And Then Consider My Options"           = 2,
+   "I Plan To Graduate From College  And Go To Graduate  Or Professional"   = 3,       
+   "Refused"                                                                = 7,
+   "Don’t Know"                                                             = 8
+ )
+ 
+ foreach(x=c(probfincol1yr,
+             probfincol2yr,
+             probfincol,
+             probextraeduc,
+             probfingraddeg), {
+   labels(x) <- c(
+   "Extremely Unlikely"                                                     = 0, 
+   "1-9"                                                                    = 1-9,
+   "Extremely Likely"                                                       = 10
+ )})
+ 
+ foreach(x=c(musm6,
+             musm13), {
+               annotation(x)["Note"] <- "This variable is a recoded version of a combination of art and science museum visits. The original variable uses the same coding criteria, so I added the two columns totals together and then divided by two. I made sure to remove all NAs, no response, and don't know observations prior to doing this mutation."
+ })
+ 
+ annotation(educprogramlyr)["Note"] <- "This variable was recoded from a numeric variable to a binary variable. I removed all of the refused and don't know observations. After that I mutated any observations that were above 0 to 1 indicating, that the individual participated in an educational program. Values that were 0 were recoded as 5 to indicate that the individual did not attend an educational program. The reason this value was recoded to 5 for no is because educprogram6 and educprogram13 have the same coding pattern."
+ 
+ annotation(sex)["Note"] <- "Sex was recoded from a character variable to a numeric variable. Male and Female variables were recoded to the following: M = 0, F = 1."
+   
+ annotation(ethnicity)["Note"] <- "Ethnicity was recoded from a character string to a numeric variable. The races were recoded to the following: B(Black/African American) = 1, W(White/Caucasian) = 2, A(Asian) = 3, H(Hispanic or Latino) = 4."
+ 
+ annotation(currntcolaspir)["Note"] <- "Refusal to answer observations did not need to be removed from this variable due to no observations having this value. I also left in don't know responses since a don't know response is a perfectly valid response for a new undergraduate student."
+ 
+ foreach(x=c(sex,
+             ethnicity), {
+               annotation(x)["Notes"] <- "This variable was a background variable, therefore it was already known about the respondent prior to the survey process since they chose their based on race"
+             })
+ 
+ foreach(x=c(caseid,
+             college), {
+               annotation(x)["Notes"] <- "This variable is a unique case identifier and did not have a formal question associated with it in the survey."
+             })
+
+})
 ```
