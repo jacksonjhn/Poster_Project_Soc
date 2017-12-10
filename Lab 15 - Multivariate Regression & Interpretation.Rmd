@@ -118,7 +118,7 @@ summary(model_7)
 model_8 <- lm(probfingraddeg ~ factor(rwrdfrgrdslyr) + 
                 factor(checkhwlyr) + 
                 factor(pnshdeviancelyr) +
-                factor(sex) +
+                sex +
                 factor(ethnicity) +
                 factor(musmlyr) +
                 factor(college),
@@ -128,13 +128,24 @@ summary(model_8)
 model_9 <- lm(probfingraddeg ~ factor(rwrdfrgrdslyr) + 
                 factor(checkhwlyr) + 
                 factor(pnshdeviancelyr) +
-                factor(sex) +
+                sex +
                 factor(ethnicity) +
                 factor(musmlyr) +
                 factor(college) +
                 probextraeduc,
               data = freshman_dataset_v4)
 summary(model_9)
+
+model_10 <- lm(probfingraddeg ~ factor(rwrdfrgrdslyr) + 
+                factor(checkhwlyr) + 
+                factor(pnshdeviancelyr) +
+                sex +
+                factor(ethnicity) +
+                factor(musmlyr) +
+                factor(college) +
+                probfincol,
+              data = freshman_dataset_v4)
+summary(model_10)
 ```
 
 
