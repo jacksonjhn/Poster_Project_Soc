@@ -1,0 +1,99 @@
+---
+title: "Visualization 2"
+author: "Jackson Nahpi"
+date: "December 5, 2017"
+output: pdf_document
+---
+```{r, echo = FALSE, warning = FALSE}
+ggplot(vis21, 
+       aes(x = factor(Ethnicity), 
+           y = probfingraddeg,
+           fill = Ethnicity),
+       legend = FALSE) +
+  geom_violin() +
+  labs(title="Race on Chance of Graduate Degree", 
+       x="Race", 
+       y="Chance of Grad. Degree Attainment") +
+  scale_x_discrete(breaks=c("1",
+                            "2",
+                            "3",
+                            "4"),
+        labels=c("Black", 
+                 "White", 
+                 "Asian",
+                 "Hispanic")) +
+  guides(fill = FALSE) +
+  theme_economist_white() 
+```
+
+
+```{r, echo = FALSE, warning = FALSE}
+ggplot(freshman_dataset_v4, 
+       aes(x = factor(musmlyr), 
+           y = probfingraddeg,
+           fill = musmlyr),
+       legend = FALSE) +
+  geom_violin() +
+  labs(title="Museum Visits on Chance of Graduate Degree", 
+       x="Rate of Museum Visits", 
+       y="Chance of Grad. Degree Attainment") +
+  scale_x_discrete(breaks=c("1",
+                            "2",
+                            "3",
+                            "4",
+                            "5"),
+        labels=c("Never", 
+                 "Rarely", 
+                 "Sometimes",
+                 "Often",
+                 "Very Often")) +
+  guides(fill = FALSE) +
+  theme_economist_white()
+```
+
+```{r, echo = FALSE, warning = FALSE}
+ggplot(freshman_dataset_v4, 
+       aes(x = factor(college), 
+           y = probfingraddeg,
+           fill = college),
+       legend = FALSE) +
+  geom_violin() +
+  labs(title="College Choice on Chance of Graduate Degree", 
+       x="College Choice", 
+       y="Chance of Grad. Degree Attainment") +
+  scale_x_discrete(breaks=c("1",
+                            "2",
+                            "3"),
+        labels=c("Liberal Arts College", 
+                 "Private Research Univ.", 
+                 "Public Research Univ.")) +
+  guides(fill = FALSE) +
+  theme_economist_white() 
+```
+
+```{r, echo = FALSE, warning = FALSE}
+ggplot(freshman_dataset_v4, 
+       aes(x = factor(sex), 
+           y = probfingraddeg,
+           fill = sex),
+       legend = FALSE) +
+  geom_violin() +
+  labs(title="Sex on Chance of Graduate Degree", 
+       x="Sex", 
+       y="Chance of Grad. Degree Attainment") +
+  scale_x_discrete(breaks=c("0",
+                            "1"),
+        labels=c("Male", 
+                 "Female")) +
+  guides(fill = FALSE) +
+  theme_economist_white()
+```
+
+
+
+##### Visualization 1 Reasoning and Process
+
+In these visuals above I varied different violin plots with different data as the explanatory variable. First I will explain the violin plot itself in general since I applied the same violin plot format to each of the four variables. The violin plot I used is from the ggplot2 package and my primary reason for using it is because it already had all the code I needed to create the violin plots. In aesthetics of the plot I factored the explanatory variable since they overlapped when it was unfactored. I also used the aesthetics function to make each of the factored variables be a different color to help distinguish them from one another. I altered the labels on all axes in order to match what the graph was representing also in this process I used the 'scale_x_discrete' function to label what each of the factored variables are. After doing this I used the guides function in order to hide the legend generated from factoring the explanatory variable, I did this because the legend was unnecessary to the visualization. Lastly, I added the theme 'theme_economist_white' just because I thought it looked nice with the visualization.
+
+
+In all four of these visuals I picked the x axis variable for different reasons. The reason why I selected sex, race, and college choice is because all three of these variables are significantly related to one another in my mosaic plot from visualization 1. So, I felt it would be important to show these variables but also to see if these identifier characteristics influence student oulook on their capabilities in the pursuit of education. The last variable I used (Museum visits) was chosen because of how significant the variable was in my multivariable regression I conducted. Museum visits had the greatest association between a students view on their educational pursuit capabilities.
